@@ -181,6 +181,89 @@ public class DashboardController {
         }
     }
 
+    private void updateStudentsPieChart(SchoolClass selectedClass) {
+        if (selectedClass == null) return;
+        try {
+            List<Student> students = studentDao.getStudentsByClass(selectedClass.getId());
+            long girls = students.stream().filter(s -> "Female".equalsIgnoreCase(s.getGender())).count();
+            long boys = students.stream().filter(s -> "Male".equalsIgnoreCase(s.getGender())).count();
 
+            studentsPieChart.getData().setAll(
+                    new PieChart.Data("Girls (" + girls + ")", girls),
+                    new PieChart.Data("Boys (" + boys + ")", boys)
+            );
+
+            Platform.runLater(() -> {
+                if (studentsPieChart.getData().size() >= 2) {
+                    var girlsNode = studentsPieChart.getData().get(0).getNode();
+                    var boysNode = studentsPieChart.getData().get(1).getNode();
+                    if (girlsNode != null) girlsNode.setStyle("-fx-pie-color: #E58AC0;");
+                    if (boysNode != null) boysNode.setStyle("-fx-pie-color: #5DADE2;");
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void setupAttendanceChart() {
+        try {
+            XYChart.Series<String, Number> present = new XYChart.Series<>();
+            present.setName("Present");
+            XYChart.Series<String, Number> absent = new XYChart.Series<>();
+            absent.setName("Absent");
+
+            // This week's Monday through Friday (skips Sunday, matches your holiday rule)
+            LocalDate today = LocalDate.now();
+            LocalDate monday = today.with(java.time.DayOfWeek.MONDAY);
+            String[] dayLabels = {"Mon", "Tue", "Wed", "Thu", "Fri"};
+
+            for (int i = 0; i < 5; i++) {
+                LocalDate date = monday.plusDays(i);
+                java.util.Map<String, Integer> counts = attendanceDao.getStatusCountsForDate(date.toString());
+                present.getData().add(new XYChart.Data<>(dayLabels[i], counts.get("PRESENT")));
+                absent.getData().add(new XYChart.Data<>(dayLabels[i], counts.get("ABSENT")));
+            }
+
+            attendanceBarChart.getData().setAll(List.of(present, absent));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+    private void setupRevenueChart() {
+        try {
+            String thisMonth = YearMonth.now().toString();
+            String lastMonth = YearMonth.now().minusMonths(1).toString();
+
+            double[] thisMonthWeekly = computeWeeklyTotals(thisMonth);
+            double[] lastMonthWeekly = computeWeeklyTotals(lastMonth);
+
+            XYChart.Series<String, Number> thisSeries = new XYChart.Series<>();
+            thisSeries.setName("This Month");
+            XYChart.Series<String, Number> lastSeries = new XYChart.Series<>();
+            lastSeries.setName("Last Month");
+
+            String[] weeks = {"Week 1", "Week 2", "Week 3", "Week 4"};
+            for (int i = 0; i < 4; i++) {
+                thisSeries.getData().add(new XYChart.Data<>(weeks[i], thisMonthWeekly[i]));
+                lastSeries.getData().add(new XYChart.Data<>(weeks[i], lastMonthWeekly[i]));
+            }
+            revenueChart.getData().setAll(List.of(thisSeries, lastSeries));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private double[] computeWeeklyTotals(String month) throws Exception {
+        double[] totals = new double[4];
+        List<FeeRecord> records = feeDao.getPaidRecordsForMonth(month);
+        for (FeeRecord r : records) {
+            if (r.getPaidDate() == null) continue;
+            int day = LocalDate.parse(r.getPaidDate()).getDayOfMonth();
+            int weekIndex = Math.min((day - 1) / 7, 3);
+            totals[weekIndex] += r.getAmount();
+        }
+        return totals;
+    }
 
 }
