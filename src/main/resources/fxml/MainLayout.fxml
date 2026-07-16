@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.brightfutureschool.controller.MainLayoutController"
+            stylesheets="@/css/theme.css">
+
+    <top>
+        <HBox styleClass="top-bar" spacing="10" alignment="CENTER_LEFT">
+            <padding><Insets top="10" right="15" bottom="10" left="15"/></padding>
+            <Button fx:id="menuToggle" text="☰" styleClass="hamburger-btn" onAction="#toggleSidebar"/>
+            <ImageView fx:id="logoImage" fitHeight="40" fitWidth="40"/>
+            <Label text="Bright Future School" styleClass="brand-title"/>
+        </HBox>
+    </top>
+
+    <left>
+        <VBox fx:id="sidebar" styleClass="sidebar" spacing="8" prefWidth="200">
+            <padding><Insets top="20" right="10" bottom="20" left="10"/></padding>
+
+            <ImageView fx:id="sidebarLogo" fitHeight="70" fitWidth="70"/>
+            <Label text="Navigation" styleClass="sidebar-brand"/>
+
+            <Region prefHeight="15"/>
+
+            <Button text="🏠  Dashboard" styleClass="nav-button" maxWidth="Infinity" onAction="#showDashboard"/>
+            <Button text="🎓  Student Records" styleClass="nav-button" maxWidth="Infinity" onAction="#showStudents"/>
+            <Button text="👩‍🏫 Teacher Records" styleClass="nav-button" maxWidth="Infinity" onAction="#showTeachers"/>
+            <Button text="📅  Attendance" styleClass="nav-button" maxWidth="Infinity" onAction="#showAttendance"/>
+            <Button text="💰  Dues &amp; Balance" styleClass="nav-button" maxWidth="Infinity" onAction="#showFee"/>
+            <Button text="📊  Exams &amp; Results" styleClass="nav-button" maxWidth="Infinity" onAction="#showResults"/>
+            <Button text="✉  Contact Students" styleClass="nav-button" maxWidth="Infinity" onAction="#showContact"/>
+            <Button text="⚙  Backup Settings" styleClass="nav-button" maxWidth="Infinity" onAction="#showSettings"/>
+            <Button text="ℹ  About" styleClass="nav-button" maxWidth="Infinity" onAction="#showAbout"/>
+        </VBox>
+    </left>
+    <center>
+        <StackPane fx:id="contentArea" style="-fx-padding: 20;"/>
+    </center>
+
+    <bottom>
+        <HBox styleClass="footer-bar" alignment="CENTER_LEFT">
+            <padding><Insets top="8" right="20" bottom="8" left="20"/></padding>
+
+            <Label text="© 2026 Bright Future School – All Rights Reserved" styleClass="footer-text"/>
+
+            <Region HBox.hgrow="ALWAYS"/>
+
+            <HBox alignment="CENTER_RIGHT" spacing="6">
+                <Hyperlink text="Privacy Policy" onAction="#onPrivacyPolicy" styleClass="footer-link"/>
+                <Label text="•" styleClass="footer-text"/>
+                <Hyperlink text="Terms &amp; Conditions" onAction="#onTermsConditions" styleClass="footer-link"/>
+                <Label text="•" styleClass="footer-text"/>
+                <Hyperlink text="⚡ Powered by Gate" onAction="#onPoweredByGate" styleClass="footer-link"/>
+            </HBox>
+        </HBox>
+    </bottom>
+</BorderPane>
