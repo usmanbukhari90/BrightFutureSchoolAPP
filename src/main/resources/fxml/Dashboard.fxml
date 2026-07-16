@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.chart.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.brightfutureschool.controller.DashboardController"
+            maxWidth="Infinity" maxHeight="Infinity">
+
+    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+    <top>
+        <BorderPane>
+            <left>
+                <VBox spacing="10">
+                    <Label fx:id="greetingLabel" style="-fx-font-family: 'Georgia'; -fx-font-size: 34px; -fx-font-weight: bold;"/>
+                    <Label fx:id="dateLabel" style="-fx-font-family: 'Segoe UI'; -fx-font-size: 15px; -fx-opacity: 0.7;"/>
+                </VBox>
+            </left>
+            <right>
+                <HBox spacing="5" alignment="CENTER" maxHeight="-Infinity" BorderPane.alignment="TOP_RIGHT">
+                    <Label fx:id="hTens" styleClass="clock-box"/>
+                    <Label fx:id="hUnits" styleClass="clock-box"/>
+                    <Label text=":" styleClass="clock-colon"/>
+                    <Label fx:id="mTens" styleClass="clock-box"/>
+                    <Label fx:id="mUnits" styleClass="clock-box"/>
+                    <Label text=":" styleClass="clock-colon"/>
+                    <Label fx:id="sTens" styleClass="clock-box"/>
+                    <Label fx:id="sUnits" styleClass="clock-box"/>
+                    <Label fx:id="ampmLabel" styleClass="clock-ampm"/>
+                </HBox>
+            </right>
+        </BorderPane>
+    </top>
+    <center>
+        <VBox spacing="15">
+            <padding><Insets top="20"/></padding>
+
+            <!-- Stat cards row -->
+            <HBox spacing="12">
+                <HBox styleClass="card" HBox.hgrow="ALWAYS" spacing="10" alignment="CENTER_LEFT">
+                    <StackPane prefWidth="55"><Label text="🎓" style="-fx-font-size: 34px;"/></StackPane>
+                    <VBox spacing="4">
+                        <Label text="Total Students" style="-fx-font-size: 12px; -fx-opacity: 0.7;"/>
+                        <Label fx:id="totalStudentsLabel" text="0" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+                    </VBox>
+                </HBox>
+
+                <HBox styleClass="card" HBox.hgrow="ALWAYS" spacing="10" alignment="CENTER_LEFT">
+                    <StackPane prefWidth="55"><Label text="👩‍🏫" style="-fx-font-size: 34px;"/></StackPane>
+                    <VBox spacing="4">
+                        <Label text="Total Teachers" style="-fx-font-size: 12px; -fx-opacity: 0.7;"/>
+                        <Label fx:id="totalTeachersLabel" text="0" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+                    </VBox>
+                </HBox>
+
+                <HBox styleClass="card" HBox.hgrow="ALWAYS" spacing="10" alignment="CENTER_LEFT">
+                    <StackPane prefWidth="55"><Label text="💰" style="-fx-font-size: 34px;"/></StackPane>
+                    <VBox spacing="4">
+                        <Label text="Fee Collected (Month)" style="-fx-font-size: 12px; -fx-opacity: 0.7;"/>
+                        <Label fx:id="feeCollectedLabel" text="Rs. 0" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+                    </VBox>
+                </HBox>
+
+                <HBox styleClass="card" HBox.hgrow="ALWAYS" spacing="10" alignment="CENTER_LEFT">
+                    <StackPane prefWidth="55"><Label text="✅" style="-fx-font-size: 34px;"/></StackPane>
+                    <VBox spacing="4">
+                        <Label text="Today's Attendance" style="-fx-font-size: 12px; -fx-opacity: 0.7;"/>
+                        <Label fx:id="attendanceLabel" text="0%" style="-fx-font-size: 22px; -fx-font-weight: bold;"/>
+                    </VBox>
+                </HBox>
+
+                <HBox styleClass="card" HBox.hgrow="ALWAYS" spacing="10" alignment="CENTER_LEFT">
+                    <StackPane prefWidth="55"><Label text="📅" style="-fx-font-size: 34px;"/></StackPane>
+                    <VBox spacing="4">
+                        <Label text="Upcoming Exam" style="-fx-font-size: 12px; -fx-opacity: 0.7;"/>
+                        <Label fx:id="upcomingExamLabel" text="None" style="-fx-font-size: 15px; -fx-font-weight: bold;"/>
+                    </VBox>
+                </HBox>
+            </HBox>
+
+            <!-- Charts row: Students pie (with class dropdown) + Attendance bar -->
+            <HBox spacing="15">
+                <VBox styleClass="card" spacing="8" HBox.hgrow="ALWAYS">
+                    <HBox alignment="CENTER_LEFT" spacing="8">
+                        <Label text="Students" style="-fx-font-size: 15px; -fx-font-weight: bold;"/>
+                        <ComboBox fx:id="classDropdown" promptText="Select Class"/>
+                    </HBox>
+                    <PieChart fx:id="studentsPieChart" legendSide="BOTTOM" prefHeight="220" labelsVisible="true"/>
+                </VBox>
+                <VBox styleClass="card" spacing="8" HBox.hgrow="ALWAYS">
+                    <Label text="Weekly Attendance" style="-fx-font-size: 15px; -fx-font-weight: bold;"/>
+                    <BarChart fx:id="attendanceBarChart" legendSide="BOTTOM" prefHeight="220">
+                        <xAxis><CategoryAxis fx:id="attendanceXAxis"/></xAxis>
+                        <yAxis><NumberAxis fx:id="attendanceYAxis"/></yAxis>
+                    </BarChart>
+                </VBox>
+            </HBox>
+
+            <!-- Revenue chart + Calendar side by side -->
+            <HBox spacing="15" VBox.vgrow="ALWAYS">
+                <VBox styleClass="card" spacing="8" HBox.hgrow="ALWAYS">
+                    <Label text="Revenue: This Month vs Last Month" style="-fx-font-size: 15px; -fx-font-weight: bold;"/>
+                    <AreaChart fx:id="revenueChart" legendSide="BOTTOM" prefHeight="220" createSymbols="true">
+                        <xAxis><CategoryAxis fx:id="revenueXAxis"/></xAxis>
+                        <yAxis><NumberAxis fx:id="revenueYAxis"/></yAxis>
+                    </AreaChart>
+                </VBox>
+
+                <VBox styleClass="card" spacing="8" prefWidth="300">
+                    <Label text="Calendar" style="-fx-font-size: 15px; -fx-font-weight: bold;"/>
+                    <GridPane fx:id="calendarGrid" hgap="6" vgap="6"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>
