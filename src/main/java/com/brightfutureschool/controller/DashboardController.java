@@ -99,5 +99,32 @@ public class DashboardController {
         ampmLabel.setText(now.getHour() < 12 ? "AM" : "PM");
     }
 
+    private void setupCalendar() {
+        LocalDate today = LocalDate.now();
+        LocalDate firstOfMonth = today.withDayOfMonth(1);
+        int daysInMonth = today.lengthOfMonth();
+        int startCol = firstOfMonth.getDayOfWeek().getValue() % 7;
+
+        String[] dayNames = {"Sun","Mon","Tue","Wed","Thu","Fri","Sat"};
+        for (int i = 0; i < 7; i++) {
+            Label dayLbl = new Label(dayNames[i]);
+            dayLbl.setStyle("-fx-font-weight: bold; -fx-font-size: 11px; -fx-opacity: 0.6;");
+            calendarGrid.add(dayLbl, i, 0);
+        }
+
+        int row = 1, col = startCol;
+        for (int day = 1; day <= daysInMonth; day++) {
+            Label dayLabel = new Label(String.valueOf(day));
+            dayLabel.setPrefWidth(28);
+            dayLabel.setAlignment(Pos.CENTER);
+            if (day == today.getDayOfMonth()) {
+                dayLabel.setStyle("-fx-background-color: #7B5B3E; -fx-text-fill: white; -fx-background-radius: 50%; -fx-font-weight: bold;");
+            }
+            calendarGrid.add(dayLabel, col, row);
+            col++;
+            if (col > 6) { col = 0; row++; }
+        }
+    }
+
 
 }
