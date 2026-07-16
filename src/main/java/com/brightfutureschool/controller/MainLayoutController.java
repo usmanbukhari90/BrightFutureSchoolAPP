@@ -68,6 +68,7 @@ public class MainLayoutController {
             contentArea.getChildren().setAll(node);
         } catch (Exception e) {
             e.printStackTrace();
+
         }
     }
     @FXML private void showStudents()    { setContent("/fxml/student/StudentRecords.fxml", "Student Records"); }
