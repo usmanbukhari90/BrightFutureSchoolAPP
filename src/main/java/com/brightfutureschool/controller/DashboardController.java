@@ -125,6 +125,62 @@ public class DashboardController {
             if (col > 6) { col = 0; row++; }
         }
     }
+    private void loadStatCards() {
+        try {
+            int totalStudents = 0;
+            for (SchoolClass c : classDao.getAllClasses()) {
+                totalStudents += studentDao.getStudentsByClass(c.getId()).size();
+            }
+            totalStudentsLabel.setText(String.valueOf(totalStudents));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            int totalTeachers = new com.brightfutureschool.dao.local.TeacherDao().getAllTeachers().size();
+            totalTeachersLabel.setText(String.valueOf(totalTeachers));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        try {
+            double collected = feeDao.getTotalPaidForMonth(YearMonth.now().toString());
+            feeCollectedLabel.setText("Rs. " + (int) collected);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // No Attendance module yet -- stays 0% until that module is built
+        try {
+            String today = LocalDate.now().toString();
+            java.util.Map<String, Integer> counts = attendanceDao.getStatusCountsForDate(today);
+            int present = counts.get("PRESENT");
+            int absent = counts.get("ABSENT");
+            int totalMarked = present + absent;
+            int percentage = totalMarked == 0 ? 0 : (int) Math.round((present * 100.0) / totalMarked);
+            attendanceLabel.setText(percentage + "%");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        // No Results & Exams module yet -- stays None until that module is built
+        upcomingExamLabel.setText("None");
+    }
+
+    private void setupClassDropdown() {
+        try {
+            List<SchoolClass> classes = classDao.getAllClasses();
+            classDropdown.getItems().setAll(classes);
+            classDropdown.setOnAction(e -> updateStudentsPieChart(classDropdown.getValue()));
+            if (!classes.isEmpty()) {
+                classDropdown.getSelectionModel().selectFirst();
+                updateStudentsPieChart(classDropdown.getValue());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 
 
 }
