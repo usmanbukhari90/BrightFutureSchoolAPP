@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<StackPane xmlns="http://javafx.com/javafx"
+           xmlns:fx="http://javafx.com/fxml"
+           fx:controller="com.brightfutureschool.controller.student.StudentRecordsController">
+
+    <VBox fx:id="landingView" spacing="20" alignment="CENTER">
+        <Label text="Student Records" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+        <HBox spacing="25" alignment="CENTER">
+            <Button text="➕ Create Class" styleClass="button-primary"
+                    style="-fx-font-size: 15px; -fx-padding: 20 35 20 35;"
+                    onAction="#onLandingCreateClass"/>
+            <Button text="📚 Available Classes" styleClass="button-primary"
+                    style="-fx-font-size: 15px; -fx-padding: 20 35 20 35;"
+                    onAction="#onLandingAvailableClasses"/>
+            <Button text="🗑 Delete Class" styleClass="button-primary"
+                    style="-fx-font-size: 15px; -fx-padding: 20 35 20 35; -fx-background-color: #E74C3C;"
+                    onAction="#onLandingDeleteClass"/>
+        </HBox>
+    </VBox>
+
+    <VBox fx:id="classesView" spacing="15" visible="false" managed="false">
+        <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Button text="&lt; Back" onAction="#onBackToLanding"/>
+            <Label fx:id="classesHeaderLabel" text="Available Classes" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+        </HBox>
+
+        <Label fx:id="classesHintLabel" style="-fx-font-size: 12px; -fx-text-fill: #7B5B3E;" wrapText="true"/>
+
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <FlowPane fx:id="classesFlow" hgap="15" vgap="15"/>
+        </ScrollPane>
+    </VBox>
+
+    <VBox fx:id="studentsView" spacing="15" visible="false" managed="false">
+        <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+        <HBox alignment="CENTER_LEFT" spacing="10">
+            <Button text="&lt; Back" onAction="#onBackToClasses"/>
+            <Label fx:id="studentsHeaderLabel" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <TextField fx:id="searchField" promptText="Search by name or roll no" onAction="#onSearch"/>
+            <Button text="Search" onAction="#onSearch"/>
+            <Button text="+ Add Student" styleClass="button-primary" onAction="#onAddStudent"/>
+        </HBox>
+        <TableView fx:id="studentsTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="rollNoColumn" text="Roll No" prefWidth="80" minWidth="70"/>
+                <TableColumn fx:id="nameColumn" text="Student Name" prefWidth="220" minWidth="140"/>
+                <TableColumn fx:id="fatherNameColumn" text="Father Name" prefWidth="200" minWidth="140"/>
+                <TableColumn fx:id="contactColumn" text="Contact" prefWidth="140" minWidth="110"/>
+                <TableColumn fx:id="addressColumn" text="Address" prefWidth="260" minWidth="150"/>
+                <TableColumn fx:id="bformColumn" text="Student B-Form / CNIC" prefWidth="200" minWidth="160"/>
+                <TableColumn fx:id="viewColumn" text="Details" prefWidth="90" minWidth="90" maxWidth="90"/>
+                <TableColumn fx:id="editColumn" text="Edit" prefWidth="80" minWidth="80" maxWidth="80"/>
+                <TableColumn fx:id="deleteColumn" text="Delete" prefWidth="90" minWidth="90" maxWidth="90"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+</StackPane>
