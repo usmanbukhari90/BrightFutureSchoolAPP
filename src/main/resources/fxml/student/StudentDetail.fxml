@@ -22,6 +22,7 @@
             </VBox>
         </HBox>
 
+
         <!-- Personal Information -->
         <Label text="PERSONAL INFORMATION" styleClass="section-header"/>
         <GridPane hgap="20" vgap="10" styleClass="detail-card">
