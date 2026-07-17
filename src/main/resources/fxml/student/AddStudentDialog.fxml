@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.brightfutureschool.controller.student.AddStudentDialogController"
+            prefWidth="780" prefHeight="640" style="-fx-background-color: #E8D9C3;">
+
+    <top>
+        <VBox style="-fx-background-color: #7B5B3E;">
+            <padding><Insets top="16" right="25" bottom="16" left="25"/></padding>
+            <Label fx:id="formTitleLabel" text="Add Student" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: white;"/>
+        </VBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent; -fx-background: transparent;">
+            <VBox spacing="16">
+                <padding><Insets top="20" right="25" bottom="20" left="25"/></padding>
+
+                <HBox spacing="20">
+                    <!-- Left: form fields -->
+                    <VBox spacing="14" HBox.hgrow="ALWAYS" styleClass="detail-card">
+                        <Label text="BASIC INFORMATION" styleClass="section-header"/>
+                        <GridPane hgap="15" vgap="10">
+                            <columnConstraints>
+                                <ColumnConstraints percentWidth="50"/>
+                                <ColumnConstraints percentWidth="50"/>
+                            </columnConstraints>
+
+                            <VBox spacing="4" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                <Label text="Student Name*" styleClass="detail-caption"/>
+                                <TextField fx:id="nameField"/>
+                            </VBox>
+                            <VBox spacing="4" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                <Label text="Gender" styleClass="detail-caption"/>
+                                <ComboBox fx:id="genderComboBox" maxWidth="Infinity" promptText="Select gender"/>
+                            </VBox>
+
+                            <VBox spacing="4" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                <Label text="Date of Birth" styleClass="detail-caption"/>
+                                <DatePicker fx:id="dobPicker" maxWidth="Infinity"/>
+                            </VBox>
+                            <VBox spacing="4" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                <Label text="Religion" styleClass="detail-caption"/>
+                                <TextField fx:id="religionField" promptText="e.g. Islam"/>
+                            </VBox>
+
+                            <VBox spacing="4" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                                <Label text="Nationality" styleClass="detail-caption"/>
+                                <TextField fx:id="nationalityField" promptText="e.g. Pakistani"/>
+                            </VBox>
+                            <VBox spacing="4" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                                <Label text="Contact" styleClass="detail-caption"/>
+                                <TextField fx:id="contactField"/>
+                            </VBox>
+                        </GridPane>
+
+                        <Label text="FAMILY INFORMATION" styleClass="section-header"/>
+                        <GridPane hgap="15" vgap="10">
+                            <columnConstraints>
+                                <ColumnConstraints percentWidth="50"/>
+                                <ColumnConstraints percentWidth="50"/>
+                            </columnConstraints>
+
+                            <VBox spacing="4" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                <Label text="Father Name*" styleClass="detail-caption"/>
+                                <TextField fx:id="fatherField"/>
+                            </VBox>
+                            <VBox spacing="4" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                <Label text="Father Profession" styleClass="detail-caption"/>
+                                <TextField fx:id="fatherProfessionField"/>
+                            </VBox>
+
+                            <VBox spacing="4" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                <Label text="Father Contact" styleClass="detail-caption"/>
+                                <TextField fx:id="fatherContactField"/>
+                            </VBox>
+                            <VBox spacing="4" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                <Label text="Mother Name*" styleClass="detail-caption"/>
+                                <TextField fx:id="motherField"/>
+                            </VBox>
+
+                            <VBox spacing="4" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                                <Label text="Mother Profession" styleClass="detail-caption"/>
+                                <TextField fx:id="motherProfessionField"/>
+                            </VBox>
+                        </GridPane>
+
+                        <Label text="ADDRESS" styleClass="section-header"/>
+                        <TextArea fx:id="addressField" prefRowCount="2" wrapText="true"/>
+                    </VBox>
+
+                    <!-- Right: photo -->
+                    <VBox spacing="8" alignment="TOP_CENTER" prefWidth="160" styleClass="detail-card">
+                        <Label text="PHOTO" styleClass="section-header"/>
+                        <ImageView fx:id="photoPreview" fitWidth="120" fitHeight="120" preserveRatio="true"/>
+                        <Button text="Choose Photo" onAction="#onChoosePhoto" maxWidth="Infinity"/>
+                        <Label fx:id="photoStatusLabel" wrapText="true" style="-fx-font-size: 11px;" textAlignment="CENTER"/>
+                        <Label text="Max size: 200 KB" style="-fx-font-size: 10px; -fx-text-fill: #999;"/>
+                    </VBox>
+                </HBox>
+
+                <Label text="IDENTIFICATION" styleClass="section-header"/>
+                <VBox spacing="10" styleClass="detail-card">
+                    <HBox spacing="20" alignment="CENTER_LEFT">
+                        <Label text="Student B-Form No." styleClass="detail-caption" prefWidth="140"/>
+                        <TextField fx:id="bform1" prefWidth="65" promptText="xxxxx"/>
+                        <Label text="-"/>
+                        <TextField fx:id="bform2" prefWidth="85" promptText="xxxxxxx"/>
+                        <Label text="-"/>
+                        <TextField fx:id="bform3" prefWidth="35" promptText="x"/>
+                    </HBox>
+                    <HBox spacing="20" alignment="CENTER_LEFT">
+                        <Label text="Father CNIC No." styleClass="detail-caption" prefWidth="140"/>
+                        <TextField fx:id="fatherCnic1" prefWidth="65" promptText="xxxxx"/>
+                        <Label text="-"/>
+                        <TextField fx:id="fatherCnic2" prefWidth="85" promptText="xxxxxxx"/>
+                        <Label text="-"/>
+                        <TextField fx:id="fatherCnic3" prefWidth="35" promptText="x"/>
+                    </HBox>
+                    <HBox spacing="20" alignment="CENTER_LEFT">
+                        <Label text="Mother CNIC No." styleClass="detail-caption" prefWidth="140"/>
+                        <TextField fx:id="motherCnic1" prefWidth="65" promptText="xxxxx"/>
+                        <Label text="-"/>
+                        <TextField fx:id="motherCnic2" prefWidth="85" promptText="xxxxxxx"/>
+                        <Label text="-"/>
+                        <TextField fx:id="motherCnic3" prefWidth="35" promptText="x"/>
+                    </HBox>
+                </VBox>
+
+            </VBox>
+        </ScrollPane>
+    </center>
+
+    <bottom>
+        <VBox style="-fx-background-color: #FFF9F2;">
+            <padding><Insets top="10" right="25" bottom="14" left="25"/></padding>
+            <Label fx:id="statusLabel" style="-fx-text-fill: #E74C3C;" wrapText="true"/>
+            <HBox spacing="10" alignment="CENTER_RIGHT">
+                <Button text="Cancel" onAction="#onCancel"/>
+                <Button fx:id="submitButton" text="Add Student" styleClass="button-primary" onAction="#onAddStudent"
+                        style="-fx-font-size: 13px; -fx-padding: 8 20 8 20;"/>
+            </HBox>
+        </VBox>
+    </bottom>
+
+</BorderPane>
