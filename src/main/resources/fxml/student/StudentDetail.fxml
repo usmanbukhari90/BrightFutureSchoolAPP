@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.brightfutureschool.controller.student.StudentDetailController"
+            fitToWidth="true" prefWidth="480" prefHeight="640"
+            style="-fx-background-color: #E8D9C3;">
+
+    <VBox spacing="14">
+        <padding><Insets top="25" right="25" bottom="25" left="25"/></padding>
+
+        <!-- Header -->
+        <HBox spacing="16" alignment="CENTER_LEFT" styleClass="detail-card">
+            <ImageView fx:id="photoView" fitWidth="120" fitHeight="120" preserveRatio="true"/>
+            <VBox spacing="6">
+                <Label fx:id="nameLabel" styleClass="profile-name"/>
+                <Label fx:id="rollBadgeLabel" styleClass="roll-badge"/>
+            </VBox>
+        </HBox>
+
+        <!-- Personal Information -->
+        <Label text="PERSONAL INFORMATION" styleClass="section-header"/>
+        <GridPane hgap="20" vgap="10" styleClass="detail-card">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="50"/>
+                <ColumnConstraints percentWidth="50"/>
+            </columnConstraints>
+
+            <VBox spacing="2" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <Label text="DATE OF BIRTH" styleClass="detail-caption"/>
+                <Label fx:id="dobValue" styleClass="detail-value"/>
+            </VBox>
+            <VBox spacing="2" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <Label text="GENDER" styleClass="detail-caption"/>
+                <Label fx:id="genderValue" styleClass="detail-value"/>
+            </VBox>
+            <VBox spacing="2" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                <Label text="RELIGION" styleClass="detail-caption"/>
+                <Label fx:id="religionValue" styleClass="detail-value"/>
+            </VBox>
+            <VBox spacing="2" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <Label text="NATIONALITY" styleClass="detail-caption"/>
+                <Label fx:id="nationalityValue" styleClass="detail-value"/>
+            </VBox>
+        </GridPane>
+
+        <!-- Family Information -->
+        <Label text="FAMILY INFORMATION" styleClass="section-header"/>
+        <GridPane hgap="20" vgap="10" styleClass="detail-card">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="50"/>
+                <ColumnConstraints percentWidth="50"/>
+            </columnConstraints>
+
+            <VBox spacing="2" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <Label text="FATHER NAME" styleClass="detail-caption"/>
+                <Label fx:id="fatherNameValue" styleClass="detail-value"/>
+            </VBox>
+            <VBox spacing="2" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <Label text="FATHER PROFESSION" styleClass="detail-caption"/>
+                <Label fx:id="fatherProfessionValue" styleClass="detail-value"/>
+            </VBox>
+            <VBox spacing="2" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                <Label text="FATHER CONTACT" styleClass="detail-caption"/>
+                <Label fx:id="fatherContactValue" styleClass="detail-value"/>
+            </VBox>
+            <VBox spacing="2" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <Label text="MOTHER NAME" styleClass="detail-caption"/>
+                <Label fx:id="motherNameValue" styleClass="detail-value"/>
+            </VBox>
+            <VBox spacing="2" GridPane.columnIndex="0" GridPane.rowIndex="2">
+                <Label text="MOTHER PROFESSION" styleClass="detail-caption"/>
+                <Label fx:id="motherProfessionValue" styleClass="detail-value"/>
+            </VBox>
+        </GridPane>
+
+        <!-- Contact & Address -->
+        <Label text="CONTACT &amp; ADDRESS" styleClass="section-header"/>
+        <GridPane hgap="20" vgap="10" styleClass="detail-card">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="50"/>
+                <ColumnConstraints percentWidth="50"/>
+            </columnConstraints>
+
+            <VBox spacing="2" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <Label text="CONTACT" styleClass="detail-caption"/>
+                <Label fx:id="contactValue" styleClass="detail-value"/>
+            </VBox>
+            <VBox spacing="2" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <Label text="ADDRESS" styleClass="detail-caption"/>
+                <Label fx:id="addressValue" styleClass="detail-value" wrapText="true"/>
+            </VBox>
+        </GridPane>
+
+        <!-- Identification -->
+        <Label text="IDENTIFICATION" styleClass="section-header"/>
+        <GridPane hgap="20" vgap="10" styleClass="detail-card">
+            <columnConstraints>
+                <ColumnConstraints percentWidth="50"/>
+                <ColumnConstraints percentWidth="50"/>
+            </columnConstraints>
+
+            <VBox spacing="2" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                <Label text="STUDENT B-FORM" styleClass="detail-caption"/>
+                <Label fx:id="bformValue" styleClass="detail-value"/>
+            </VBox>
+            <VBox spacing="2" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                <Label text="FATHER CNIC" styleClass="detail-caption"/>
+                <Label fx:id="fatherCnicValue" styleClass="detail-value"/>
+            </VBox>
+            <VBox spacing="2" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                <Label text="MOTHER CNIC" styleClass="detail-caption"/>
+                <Label fx:id="motherCnicValue" styleClass="detail-value"/>
+            </VBox>
+        </GridPane>
+
+        <Button text="Close" onAction="#onClose" maxWidth="Infinity"/>
+    </VBox>
+</ScrollPane>
