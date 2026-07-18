@@ -220,6 +220,7 @@ public class FeeDao {
 
 
 
+
     private FeeRecord mapRow(ResultSet rs) throws SQLException {
         FeeRecord f = new FeeRecord();
         f.setId(rs.getLong("id"));
