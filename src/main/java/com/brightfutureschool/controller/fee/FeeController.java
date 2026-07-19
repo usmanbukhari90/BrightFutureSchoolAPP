@@ -258,6 +258,7 @@ public class FeeController {
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
+
         }
     }
 
