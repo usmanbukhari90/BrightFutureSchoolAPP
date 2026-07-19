@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.brightfutureschool.controller.fee.FeeController"
+            maxWidth="Infinity" maxHeight="Infinity">
+
+    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+    <top>
+        <VBox spacing="10">
+            <Label text="Dues &amp; Balance" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Class:" style="-fx-font-weight: bold;"/>
+                <ComboBox fx:id="classDropdown" promptText="Select Class"/>
+
+                <Label text="Fee:" style="-fx-font-weight: bold;"/>
+                <ComboBox fx:id="feeAssignmentDropdown" promptText="Select Fee" prefWidth="220"/>
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <TextField fx:id="searchField" promptText="Search by Roll No or Name" prefWidth="200"/>
+                <Button text="Search" onAction="#onSearch"/>
+                <Button text="Assign Fee" styleClass="button-primary" onAction="#onAssignFee"/>
+                <Button text="Delete Fee" style="-fx-text-fill: #E74C3C;" onAction="#onDeleteFee"/>
+            </HBox>
+            <Separator/>
+        </VBox>
+    </top>
+
+    <center>
+        <TableView fx:id="feeTable" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="colRollNo" text="Roll No" prefWidth="70"/>
+                <TableColumn fx:id="colName" text="Student Name" prefWidth="170"/>
+                <TableColumn fx:id="colAmount" text="Amount (Rs.)" prefWidth="95"/>
+                <TableColumn fx:id="colStatus" text="Status" prefWidth="80"/>
+                <TableColumn fx:id="colMarkPaid" text="Mark Paid" prefWidth="95"/>
+                <TableColumn fx:id="colPrint" text="Print / Save" prefWidth="95"/>
+                <TableColumn fx:id="colDetails" text="Details" prefWidth="85"/>
+            </columns>
+        </TableView>
+    </center>
+
+</BorderPane>
