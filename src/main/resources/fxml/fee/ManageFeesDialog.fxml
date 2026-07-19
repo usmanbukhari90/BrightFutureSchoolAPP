@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.brightfutureschool.controller.fee.ManageFeesDialogController"
+      spacing="12" prefWidth="600" prefHeight="450">
+
+    <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+
+    <Label text="Manage / Delete Assigned Fees" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+    <HBox spacing="10" alignment="CENTER_LEFT">
+        <Label text="Class:"/>
+        <ComboBox fx:id="classDropdown" promptText="Select Class"/>
+        <Label text="Month:"/>
+        <ComboBox fx:id="monthDropdown" promptText="Select Month"/>
+    </HBox>
+
+    <TableView fx:id="recordsTable" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colRollNo" text="Roll No" prefWidth="70"/>
+            <TableColumn fx:id="colName" text="Student Name" prefWidth="150"/>
+            <TableColumn fx:id="colFeeType" text="Fee Type" prefWidth="130"/>
+            <TableColumn fx:id="colAmount" text="Amount (Rs.)" prefWidth="90"/>
+            <TableColumn fx:id="colStatus" text="Status" prefWidth="80"/>
+            <TableColumn fx:id="colDelete" text="Action" prefWidth="90"/>
+        </columns>
+    </TableView>
+
+    <HBox alignment="CENTER_RIGHT">
+        <Button text="Close" onAction="#onClose"/>
+    </HBox>
+
+</VBox>
