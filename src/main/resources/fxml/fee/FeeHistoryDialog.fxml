@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.brightfutureschool.controller.fee.FeeHistoryDialogController"
+      spacing="14" prefWidth="640" prefHeight="580" style="-fx-background-color: #F3E9DC; -fx-padding: 18;">
+
+    <HBox spacing="12" alignment="CENTER_LEFT" styleClass="card" style="-fx-padding: 15;">
+        <Label text="🧾" style="-fx-font-size: 30px;"/>
+        <VBox spacing="2" HBox.hgrow="ALWAYS">
+            <Label fx:id="studentNameLabel" style="-fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <HBox spacing="18">
+                <Label fx:id="fatherNameLabel" style="-fx-font-size: 11px; -fx-opacity: 0.75;"/>
+                <Label fx:id="classLabel" style="-fx-font-size: 11px; -fx-opacity: 0.75;"/>
+                <Label fx:id="rollNoLabel" style="-fx-font-size: 11px; -fx-opacity: 0.75;"/>
+            </HBox>
+        </VBox>
+    </HBox>
+
+    <HBox spacing="12">
+        <VBox styleClass="card" HBox.hgrow="ALWAYS" alignment="CENTER" spacing="4"
+              style="-fx-border-color: #7B5B3E; -fx-border-width: 0 0 0 4;">
+            <Label text="TOTAL ASSIGNED" style="-fx-font-size: 10px; -fx-opacity: 0.6; -fx-font-weight: bold;"/>
+            <Label fx:id="totalAssignedLabel" style="-fx-font-size: 19px; -fx-font-weight: bold; -fx-text-fill: #7B5B3E;"/>
+        </VBox>
+        <VBox styleClass="card" HBox.hgrow="ALWAYS" alignment="CENTER" spacing="4"
+              style="-fx-border-color: #4CAF50; -fx-border-width: 0 0 0 4;">
+            <Label text="TOTAL PAID" style="-fx-font-size: 10px; -fx-opacity: 0.6; -fx-font-weight: bold;"/>
+            <Label fx:id="totalPaidLabel" style="-fx-font-size: 19px; -fx-font-weight: bold; -fx-text-fill: #4CAF50;"/>
+        </VBox>
+        <VBox styleClass="card" HBox.hgrow="ALWAYS" alignment="CENTER" spacing="4"
+              style="-fx-border-color: #E74C3C; -fx-border-width: 0 0 0 4;">
+            <Label text="TOTAL PENDING" style="-fx-font-size: 10px; -fx-opacity: 0.6; -fx-font-weight: bold;"/>
+            <Label fx:id="totalPendingLabel" style="-fx-font-size: 19px; -fx-font-weight: bold; -fx-text-fill: #E74C3C;"/>
+        </VBox>
+        <VBox styleClass="card" HBox.hgrow="ALWAYS" alignment="CENTER" spacing="4"
+              style="-fx-border-color: #5DADE2; -fx-border-width: 0 0 0 4;">
+            <Label text="TOTAL REFUNDED" style="-fx-font-size: 10px; -fx-opacity: 0.6; -fx-font-weight: bold;"/>
+            <Label fx:id="totalRefundedLabel" style="-fx-font-size: 19px; -fx-font-weight: bold; -fx-text-fill: #5DADE2;"/>
+        </VBox>
+    </HBox>
+
+    <VBox styleClass="card" VBox.vgrow="ALWAYS" spacing="8" style="-fx-padding: 15;">
+        <Label text="All Transactions" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #7B5B3E;"/>
+        <TableView fx:id="historyTable" VBox.vgrow="ALWAYS">
+            <columns>
+                <TableColumn fx:id="colMonth" text="Month" prefWidth="110"/>
+                <TableColumn fx:id="colFeeType" text="Fee Type" prefWidth="150"/>
+                <TableColumn fx:id="colAmount" text="Amount" prefWidth="100"/>
+                <TableColumn fx:id="colStatus" text="Status" prefWidth="90"/>
+                <TableColumn fx:id="colPaidDate" text="Paid On" prefWidth="110"/>
+            </columns>
+        </TableView>
+    </VBox>
+
+    <HBox alignment="CENTER_RIGHT">
+        <Button text="Close" onAction="#onClose"/>
+    </HBox>
+
+</VBox>
