@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.geometry.*?>
+<?import java.lang.Double?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.brightfutureschool.controller.fee.ReceiptController"
+      fx:id="receiptRoot"
+      spacing="0" style="-fx-background-color: white;" prefWidth="595">
+
+    <!-- Header: logo beside name, address/contact below name -->
+    <StackPane prefHeight="120">
+        <Polygon fill="#7B5B3E" StackPane.alignment="TOP_RIGHT">
+            <points>
+                <Double fx:value="60.0"/><Double fx:value="0.0"/>
+                <Double fx:value="220.0"/><Double fx:value="0.0"/>
+                <Double fx:value="220.0"/><Double fx:value="120.0"/>
+                <Double fx:value="140.0"/><Double fx:value="120.0"/>
+            </points>
+        </Polygon>
+        <Polygon fill="#2C3E50" StackPane.alignment="TOP_RIGHT">
+            <points>
+                <Double fx:value="150.0"/><Double fx:value="0.0"/>
+                <Double fx:value="220.0"/><Double fx:value="0.0"/>
+                <Double fx:value="220.0"/><Double fx:value="60.0"/>
+            </points>
+        </Polygon>
+        <Circle radius="5" fill="#5DADE2" translateX="205" translateY="-40"/>
+
+        <HBox spacing="12" alignment="CENTER_LEFT" StackPane.alignment="CENTER_LEFT" style="-fx-padding: 0 0 0 25; -fx-max-width: 400;">
+            <ImageView fx:id="logoImage" fitHeight="60" fitWidth="60"/>
+            <VBox spacing="3" alignment="CENTER_LEFT">
+                <Label text="BRIGHT FUTURE SCHOOL" style="-fx-font-family: 'Georgia'; -fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #7B5B3E;" wrapText="false"/>
+                <Label text="Manka Canal Road, Muslim Town, DG Khan" style="-fx-font-size: 10px; -fx-text-fill: #2C3E50;"/>
+                <Label text="Contact: 0333-7253940 , 0313-7254087" style="-fx-font-size: 10px; -fx-text-fill: #2C3E50;"/>
+            </VBox>
+        </HBox>
+    </StackPane>
+
+    <Separator/>
+
+    <VBox spacing="14" style="-fx-padding: 20;">
+
+        <VBox alignment="CENTER" spacing="4">
+            <Label text="FEE RECEIPT" style="-fx-font-family: 'Georgia'; -fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #7B5B3E;"/>
+            <Region prefWidth="80" prefHeight="2" style="-fx-background-color: #7B5B3E;"/>
+        </VBox>
+
+        <HBox alignment="TOP_CENTER">
+            <VBox spacing="2" HBox.hgrow="ALWAYS">
+                <Label text="RECEIPT TO" style="-fx-font-size: 10px; -fx-opacity: 0.6;"/>
+                <Label fx:id="studentNameLabel" style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+                <Label fx:id="fatherNameLabel" style="-fx-font-size: 11px;"/>
+                <Label fx:id="classLabel" style="-fx-font-size: 11px;"/>
+                <Label fx:id="monthLabel" style="-fx-font-size: 11px;"/>
+                <Label fx:id="rollNoLabel" style="-fx-font-size: 11px;"/>
+            </VBox>
+
+            <VBox spacing="2" alignment="TOP_RIGHT" HBox.hgrow="ALWAYS">
+                <Label text="Receipt No:" style="-fx-font-size: 10px; -fx-opacity: 0.6;"/>
+                <Label fx:id="receiptNoLabel" style="-fx-font-size: 12px; -fx-font-weight: bold;"/>
+                <Label text="Date:" style="-fx-font-size: 10px; -fx-opacity: 0.6;"/>
+                <Label fx:id="datePaidLabel" style="-fx-font-size: 12px; -fx-font-weight: bold;"/>
+            </VBox>
+        </HBox>
+
+        <GridPane fx:id="feeTableGrid" hgap="0" vgap="0" style="-fx-border-color: #7B5B3E; -fx-border-width: 1;"/>
+
+        <VBox spacing="5" style="-fx-padding: 8 0 0 0;" alignment="CENTER_RIGHT">
+            <HBox spacing="15" alignment="CENTER_RIGHT">
+                <Label text="Total Amount:" style="-fx-font-size: 12px;"/>
+                <Label fx:id="totalLabel" style="-fx-font-size: 12px; -fx-min-width: 90; -fx-alignment: CENTER_RIGHT;"/>
+            </HBox>
+            <HBox spacing="15" alignment="CENTER_RIGHT">
+                <Label text="Amount Paid:" style="-fx-font-size: 12px;"/>
+                <Label fx:id="paidLabel" style="-fx-font-size: 12px; -fx-min-width: 90; -fx-alignment: CENTER_RIGHT;"/>
+            </HBox>
+            <HBox spacing="15" alignment="CENTER_RIGHT">
+                <Label text="Remaining:" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #7B5B3E;"/>
+                <Label fx:id="remainingLabel" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #7B5B3E; -fx-min-width: 90; -fx-alignment: CENTER_RIGHT;"/>
+            </HBox>
+        </VBox>
+
+        <Region prefHeight="25"/>
+        <HBox alignment="CENTER_RIGHT">
+            <Label text="Admin Signature: ______________________" style="-fx-font-size: 11px;"/>
+        </HBox>
+        <Region prefHeight="8"/>
+        <Label text="Wishing your child a Bright Future!" style="-fx-font-style: italic; -fx-font-size: 11px; -fx-text-fill: #7B5B3E; -fx-alignment: center;" maxWidth="Infinity"/>
+        <Region prefHeight="15"/>
+
+        <HBox fx:id="actionButtonsBox" spacing="10" alignment="CENTER">
+            <Button text="Save as PDF" styleClass="button-primary" onAction="#onSaveAsPdf"/>
+            <Button text="Print Receipt" styleClass="button-primary" onAction="#onPrint"/>
+            <Button text="Close" onAction="#onClose"/>
+        </HBox>
+    </VBox>
+
+</VBox>
