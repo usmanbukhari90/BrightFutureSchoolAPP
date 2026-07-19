@@ -213,6 +213,7 @@ public class ReceiptController {
         PrinterJob job = PrinterJob.createPrinterJob();
         if (job == null) return;
 
+
         Printer printer = job.getPrinter();
         PageLayout pageLayout = printer.createPageLayout(Paper.A4, PageOrientation.PORTRAIT, Printer.MarginType.DEFAULT);
         job.getJobSettings().setPageLayout(pageLayout);
