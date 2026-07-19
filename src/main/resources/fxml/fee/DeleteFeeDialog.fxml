@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.brightfutureschool.controller.fee.DeleteFeeDialogController"
+      spacing="14" prefWidth="380">
+
+    <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+
+    <Label text="Delete an Assigned Fee" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+    <Label text="This removes the fee from every student it was assigned to. Any student who already paid will be refunded automatically."
+           wrapText="true" style="-fx-font-size: 12px; -fx-opacity: 0.75;"/>
+
+    <Label text="Class"/>
+    <ComboBox fx:id="classDropdown" promptText="Select Class" maxWidth="Infinity"/>
+
+    <Label text="Fee"/>
+    <ComboBox fx:id="feeAssignmentDropdown" promptText="Select Fee" maxWidth="Infinity"/>
+
+    <Label fx:id="summaryLabel" style="-fx-font-size: 12px; -fx-opacity: 0.8;" wrapText="true"/>
+
+    <Label fx:id="errorLabel" style="-fx-text-fill: #E74C3C; -fx-font-size: 12px;" wrapText="true" managed="false" visible="false"/>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Cancel" onAction="#onCancel"/>
+        <Button text="Delete Fee" style="-fx-background-color: #E74C3C; -fx-text-fill: white;" onAction="#onDelete"/>
+    </HBox>
+
+</VBox>
