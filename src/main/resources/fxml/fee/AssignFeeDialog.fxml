@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import javafx.fxml.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.brightfutureschool.controller.fee.AssignFeeDialogController"
+      spacing="12" prefWidth="480">
+
+    <fx:define>
+        <ToggleGroup fx:id="applyToGroup"/>
+    </fx:define>
+
+    <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+
+    <Label text="Assign Fee" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+
+    <Label text="Fee Type"/>
+    <ComboBox fx:id="feeTypeDropdown" editable="true" maxWidth="Infinity"
+              promptText="Admission Fee / Tuition Fee / Arrears / Paper Money"/>
+
+    <Label text="Default Amount (Rs.)"/>
+    <HBox spacing="10">
+        <TextField fx:id="amountField" promptText="e.g. 5000" HBox.hgrow="ALWAYS"/>
+        <Button text="Apply to All Below" onAction="#onApplyDefaultToAll"/>
+    </HBox>
+
+    <Label text="Apply To"/>
+    <RadioButton fx:id="wholeClassRadio" text="Whole Class (edit individual amounts below)" toggleGroup="$applyToGroup" selected="true" onAction="#onModeChanged"/>
+    <RadioButton fx:id="singleStudentRadio" text="Selected Student Only" toggleGroup="$applyToGroup" onAction="#onModeChanged"/>
+
+    <TableView fx:id="studentAmountTable" prefHeight="220">
+        <columns>
+            <TableColumn fx:id="colStuRollNo" text="Roll No" prefWidth="80"/>
+            <TableColumn fx:id="colStuName" text="Name" prefWidth="180"/>
+            <TableColumn fx:id="colStuAmount" text="Amount (Rs.)" prefWidth="120"/>
+        </columns>
+    </TableView>
+
+    <Label fx:id="errorLabel" style="-fx-text-fill: #E74C3C; -fx-font-size: 12px;" wrapText="true" managed="false" visible="false"/>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Cancel" onAction="#onCancel"/>
+        <Button text="Assign" styleClass="button-primary" onAction="#onAssign"/>
+    </HBox>
+
+</VBox>
