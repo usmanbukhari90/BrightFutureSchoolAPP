@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.brightfutureschool.controller.contact.ContactController"
+            maxWidth="Infinity" maxHeight="Infinity">
+
+    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+    <top>
+        <VBox spacing="10">
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Label text="Contact" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+                <Label text="Class:" style="-fx-font-weight: bold;"/>
+                <ComboBox fx:id="classDropdown" promptText="Select Class"/>
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <Label fx:id="senderLabel" style="-fx-font-size: 11px; -fx-opacity: 0.7;"/>
+                <Button text="Manage My WhatsApp Numbers" onAction="#onManageSenders"/>
+            </HBox>
+
+            <Label text="Message" style="-fx-font-weight: bold;"/>
+            <TextArea fx:id="messageArea" promptText="Type your message here... e.g. Dear Parent, this is a reminder that July fee is due." wrapText="true" prefRowCount="3"/>
+
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <Button text="Send to Selected Students" styleClass="button-primary" onAction="#onSendToSelected"/>
+                <Button text="Send to Whole Class" styleClass="button-primary" onAction="#onSendToClass"/>
+                <Label text="Note: WhatsApp will open one chat at a time — click Send inside WhatsApp for each." style="-fx-font-size: 11px; -fx-opacity: 0.65;" wrapText="true"/>
+            </HBox>
+            <Separator/>
+        </VBox>
+    </top>
+
+    <center>
+        <TableView fx:id="studentsTable" BorderPane.alignment="CENTER">
+            <columns>
+                <TableColumn fx:id="colSelect" text="Select" prefWidth="60"/>
+                <TableColumn fx:id="colRollNo" text="Roll No" prefWidth="70"/>
+                <TableColumn fx:id="colName" text="Student Name" prefWidth="180"/>
+                <TableColumn fx:id="colContact" text="WhatsApp Contact" prefWidth="150"/>
+                <TableColumn fx:id="colAction" text="Action" prefWidth="120"/>
+            </columns>
+        </TableView>
+    </center>
+
+</BorderPane>
