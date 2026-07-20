@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.brightfutureschool.controller.teacher.TeacherController"
+            maxWidth="Infinity" maxHeight="Infinity">
+
+    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+    <top>
+        <VBox spacing="10">
+            <Label text="Teachers" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
+            <HBox spacing="10" alignment="CENTER_LEFT">
+                <TextField fx:id="searchField" promptText="Search by name or subject" prefWidth="220"/>
+                <Button text="Search" onAction="#onSearch"/>
+                <Region HBox.hgrow="ALWAYS"/>
+                <Button text="+ Add Teacher" styleClass="button-primary" onAction="#onAddTeacher"/>
+                <Button text="🗑 Delete Mode" onAction="#onToggleDeleteMode" fx:id="deleteModeBtn"/>
+            </HBox>
+            <Separator/>
+        </VBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" style="-fx-background-color: transparent;">
+            <FlowPane fx:id="teachersFlow" hgap="15" vgap="15">
+                <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+            </FlowPane>
+        </ScrollPane>
+    </center>
+
+</BorderPane>
