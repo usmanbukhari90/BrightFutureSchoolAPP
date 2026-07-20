@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.brightfutureschool.controller.contact.ManageSendersDialogController"
+      spacing="12" prefWidth="360">
+
+    <padding><Insets top="15" right="15" bottom="15" left="15"/></padding>
+
+    <Label text="My WhatsApp Numbers" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+    <Label text="These are just for your own reference — WhatsApp always sends from whichever account is logged into WhatsApp Desktop/Web on this PC."
+           wrapText="true" style="-fx-font-size: 11px; -fx-opacity: 0.7;"/>
+
+    <HBox spacing="8">
+        <TextField fx:id="numberField" promptText="e.g. 923001234567 (with country code)" HBox.hgrow="ALWAYS"/>
+        <Button text="Add" styleClass="button-primary" onAction="#onAdd"/>
+    </HBox>
+
+    <ListView fx:id="numbersList" prefHeight="150" onMouseClicked="#onListClicked"/>
+
+    <Label fx:id="errorLabel" style="-fx-text-fill: #E74C3C; -fx-font-size: 12px;" wrapText="true" managed="false" visible="false"/>
+
+    <HBox alignment="CENTER_RIGHT">
+        <Button text="Close" onAction="#onClose"/>
+    </HBox>
+
+</VBox>
