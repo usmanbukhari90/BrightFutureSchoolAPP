@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            fitToWidth="true" prefWidth="600" prefHeight="680" style="-fx-background-color: #E8D9C3;">
+
+    <VBox spacing="18" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #E0C9A6; -fx-border-radius: 10; -fx-border-width: 1;">
+        <padding><Insets top="28" right="32" bottom="30" left="32"/></padding>
+
+        <Label text="Privacy Policy" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #7B5B3E; -fx-font-family: 'Georgia';"/>
+        <Label text="Last updated: July 2026" style="-fx-font-size: 11px; -fx-text-fill: #999999;"/>
+
+        <Separator/>
+
+        <VBox spacing="6">
+            <Label text="1. Local Data Storage" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <Label wrapText="true" style="-fx-font-size: 12px; -fx-text-fill: #444444;"
+                   text="All student, attendance, examination, and fee records entered into this application are stored locally on this computer's hard drive, inside a private database file. No data entered into this application is transmitted over the internet, and no external or cloud servers are used to store or process school records. The application is designed to function fully offline."/>
+        </VBox>
+
+        <VBox spacing="6">
+            <Label text="2. What Information Is Collected" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <Label wrapText="true" style="-fx-font-size: 12px; -fx-text-fill: #444444;"
+                   text="This application stores information entered by the school administration, including but not limited to: student names, father's and mother's names, dates of birth, gender, religion, nationality, addresses, contact numbers, CNIC and B-Form numbers, student photographs, class and roll number assignments, daily attendance records, examination marks and results, and fee payment records."/>
+        </VBox>
+
+        <VBox spacing="6">
+            <Label text="3. No Third-Party Sharing" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <Label wrapText="true" style="-fx-font-size: 12px; -fx-text-fill: #444444;"
+                   text="Information stored in this application is never sold, rented, or shared with any third party, advertiser, or external service. There are no analytics services, tracking scripts, or advertising networks embedded in this application."/>
+        </VBox>
+
+        <VBox spacing="6">
+            <Label text="4. Student Photographs and Sensitive Information" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <Label wrapText="true" style="-fx-font-size: 12px; -fx-text-fill: #444444;"
+                   text="Student photographs, CNIC numbers, and B-Form numbers are sensitive personal information. These are stored locally and used only within this application, for the purposes of identification, record-keeping, and printed result cards. The school administration is responsible for ensuring this information is only accessed by authorized staff."/>
+        </VBox>
+
+        <VBox spacing="6">
+            <Label text="5. Data Responsibility and Backups" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <Label wrapText="true" style="-fx-font-size: 12px; -fx-text-fill: #444444;"
+                   text="Because all data is stored locally rather than on a cloud server, the school administration is solely responsible for safeguarding the computer on which this application runs, restricting physical and login access to authorized personnel, and maintaining regular backups of the database file to prevent accidental data loss."/>
+        </VBox>
+
+        <VBox spacing="6">
+            <Label text="6. WhatsApp Contact Feature" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <Label wrapText="true" style="-fx-font-size: 12px; -fx-text-fill: #444444;"
+                   text="When the administrator uses the Contact feature to message a parent or student via WhatsApp, that communication takes place directly through WhatsApp's own platform and is governed by WhatsApp's own privacy policy and terms of service, not by this application."/>
+        </VBox>
+
+        <VBox spacing="6">
+            <Label text="7. Software Copyright and Piracy" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <Label wrapText="true" style="-fx-font-size: 12px; -fx-text-fill: #444444;"
+                   text="This application, including its source code, design, and structure, is the intellectual property of Gate and is protected under the Copyright Ordinance, 1962 (as amended by the Copyright (Amendment) Act, 1992 and the Copyright (Amendment) Ordinance, 2000), the primary law governing copyright protection and software piracy in Pakistan. Unauthorized copying, reproduction, reverse engineering, or redistribution of this software without the express written permission of Gate is prohibited and may result in civil and criminal liability under this law."/>
+        </VBox>
+
+        <VBox spacing="6">
+            <Label text="8. Changes to This Policy" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <Label wrapText="true" style="-fx-font-size: 12px; -fx-text-fill: #444444;"
+                   text="This policy may be updated as the application evolves. Continued use of the application after an update constitutes acceptance of the revised policy."/>
+        </VBox>
+
+    </VBox>
+</ScrollPane>
