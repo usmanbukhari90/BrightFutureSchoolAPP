@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.brightfutureschool.controller.BackupSettingsController"
+      spacing="18">
+    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+    <Label text="Backup Settings" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+    <VBox spacing="10" styleClass="detail-card">
+        <Label text="What Gets Backed Up" styleClass="section-header"/>
+        <Label wrapText="true" style="-fx-font-size: 13px; -fx-text-fill: #444444;"
+               text="Running a backup creates a new 'Session' folder — organized by year — containing every class's student records, exam results, and fee records, each saved as a spreadsheet-compatible file. You can save this folder anywhere: a separate hard disk, a USB drive, or cloud storage folder synced to this computer. Daily attendance records are intentionally excluded from backups, as they change constantly and are best kept live in the system."/>
+    </VBox>
+
+    <HBox spacing="12">
+        <Button text="📥 Backup Now" styleClass="button-primary" onAction="#onBackupNow"
+                style="-fx-font-size: 13px; -fx-padding: 10 22 10 22;"/>
+        <Button text="📂 Open Last Backup Folder" onAction="#onOpenBackupFolder"
+                style="-fx-padding: 10 18 10 18;"/>
+    </HBox>
+
+    <Label fx:id="statusLabel" wrapText="true" style="-fx-font-size: 12px; -fx-text-fill: #2C3E50;"/>
+
+</VBox>
