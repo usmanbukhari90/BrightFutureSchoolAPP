@@ -1,0 +1,15 @@
+# Build output
+target/
+
+# Local database (personal data, not source code)
+*.db
+
+# IntelliJ project files
+.idea/
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
