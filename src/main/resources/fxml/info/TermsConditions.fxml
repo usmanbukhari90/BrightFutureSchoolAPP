@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            fitToWidth="true" prefWidth="600" prefHeight="650" style="-fx-background-color: #E8D9C3;">
+
+    <VBox spacing="18" style="-fx-background-color: white; -fx-background-radius: 10; -fx-border-color: #E0C9A6; -fx-border-radius: 10; -fx-border-width: 1;">
+        <padding><Insets top="28" right="32" bottom="30" left="32"/></padding>
+
+        <Label text="Terms &amp; Conditions" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #7B5B3E; -fx-font-family: 'Georgia';"/>
+        <Label text="Last updated: July 2026" style="-fx-font-size: 11px; -fx-text-fill: #999999;"/>
+
+        <Separator/>
+
+        <VBox spacing="6">
+            <Label text="1. Intended Use" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <Label wrapText="true" style="-fx-font-size: 12px; -fx-text-fill: #444444;"
+                   text="This application is licensed for use by Bright Future School for the purpose of managing student records, attendance, examinations, results, and fee collection. It is intended for use by authorized school administrative staff only."/>
+        </VBox>
+
+        <VBox spacing="6">
+            <Label text="2. Data Accuracy" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <Label wrapText="true" style="-fx-font-size: 12px; -fx-text-fill: #444444;"
+                   text="The school administration is responsible for the accuracy of all data entered into the system, including student information, attendance records, examination marks, and fee records."/>
+        </VBox>
+
+        <VBox spacing="6">
+            <Label text="3. Backups and Data Loss" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <Label wrapText="true" style="-fx-font-size: 12px; -fx-text-fill: #444444;"
+                   text="This application stores all data locally on the host computer. Gate is not responsible for data loss resulting from hardware failure, accidental deletion, or failure to maintain regular backups. Regular backup of the database file is strongly recommended."/>
+        </VBox>
+
+        <VBox spacing="6">
+            <Label text="4. Software Ownership and Modification" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <Label wrapText="true" style="-fx-font-size: 12px; -fx-text-fill: #444444;"
+                   text="This software and its source code remain the intellectual property of Gate. Unauthorized modification, reverse engineering, copying, resale, or redistribution of this application without written permission from Gate is strictly prohibited and may constitute an offence under the Copyright Ordinance, 1962 (as amended), the primary law governing copyright and software piracy in Pakistan."/>
+        </VBox>
+
+        <VBox spacing="6">
+            <Label text="5. Support and Updates" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <Label wrapText="true" style="-fx-font-size: 12px; -fx-text-fill: #444444;"
+                   text="Feature updates, bug fixes, and technical support may be provided by Gate as agreed separately with the school administration, and are not automatically included with continued use of the application."/>
+        </VBox>
+
+        <VBox spacing="6">
+            <Label text="6. Limitation of Liability" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <Label wrapText="true" style="-fx-font-size: 12px; -fx-text-fill: #444444;"
+                   text="This application is provided as-is, without warranty of any kind. Gate shall not be liable for any indirect, incidental, or consequential damages arising from the use, misuse, or inability to use this software."/>
+        </VBox>
+
+        <VBox spacing="6">
+            <Label text="7. Governing Law" style="-fx-font-size: 14px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <Label wrapText="true" style="-fx-font-size: 12px; -fx-text-fill: #444444;"
+                   text="These terms are governed by the laws of Pakistan, including but not limited to the Copyright Ordinance, 1962, and any dispute arising under them shall be subject to the jurisdiction of the courts of Pakistan."/>
+        </VBox>
+
+    </VBox>
+</ScrollPane>
