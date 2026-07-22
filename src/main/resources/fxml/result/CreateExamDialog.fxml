@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.brightfutureschool.controller.result.CreateExamDialogController"
+            fitToWidth="true" prefWidth="480" prefHeight="560" style="-fx-background-color: #E8D9C3;">
+
+    <VBox spacing="12">
+        <padding><Insets top="20" right="25" bottom="20" left="25"/></padding>
+
+        <Label text="Create Exam" style="-fx-font-size: 17px; -fx-font-weight: bold;"/>
+
+        <Label text="Exam Name (e.g. 1st Annual Examination)" styleClass="detail-caption"/>
+        <TextField fx:id="examNameField"/>
+
+        <Label text="Year (e.g. 2026)" styleClass="detail-caption"/>
+        <TextField fx:id="examYearField"/>
+
+        <Separator/>
+        <Label text="Subjects &amp; Total Marks" styleClass="section-header"/>
+
+        <VBox fx:id="subjectsBox" spacing="8"/>
+
+        <Button text="+ Add Subject" onAction="#onAddSubjectRow"/>
+
+        <Label fx:id="statusLabel" style="-fx-text-fill: #E74C3C;" wrapText="true"/>
+
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button text="Cancel" onAction="#onCancel"/>
+            <Button text="Create Exam" styleClass="button-primary" onAction="#onCreate"/>
+        </HBox>
+    </VBox>
+</ScrollPane>
