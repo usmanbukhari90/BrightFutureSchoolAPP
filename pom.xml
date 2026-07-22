@@ -96,6 +96,7 @@
                     <winMenu>true</winMenu>
                     <winShortcut>true</winShortcut>
                     <winDirChooser>true</winDirChooser>
+                    <winConsole>true</winConsole>
                     <type>EXE</type>
                 </configuration>
             </plugin>
