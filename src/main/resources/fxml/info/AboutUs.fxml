@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.brightfutureschool.controller.info.AboutUsController"
+            fitToWidth="true" style="-fx-background-color: transparent;">
+    <VBox spacing="18">
+        <padding><Insets top="10" right="10" bottom="20" left="10"/></padding>
+
+        <Label text="About This Application" style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+
+        <!-- Intro -->
+        <VBox spacing="8" styleClass="detail-card">
+            <Label text="Bright Future School Management System" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #7B5B3E;"/>
+            <Label text="Version 1.0  •  Offline Desktop Application" style="-fx-font-size: 12px; -fx-text-fill: #999999;"/>
+            <Label wrapText="true" style="-fx-font-size: 15px; -fx-text-fill: #2C3E50;"
+                   text="Bright Future School Management System is a complete, all-in-one digital solution built to bring every part of the school's daily administration into one seamless, elegant desktop experience. From the moment a student is admitted to the day they receive their final result card, this system quietly handles the details  record keeping, attendance, examinations, fee collection, and parent communication, so the administration can focus on running the school, not managing paperwork. Designed to run entirely offline, the system keeps every piece of student data securely on the school's own computer, fully under the administration's control, with no dependency on the internet or any external company."/>
+        </VBox>
+
+        <Label text="FEATURES" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #7B5B3E; -fx-padding: 10 0 0 0;"/>
+
+        <!-- Dashboard -->
+        <VBox spacing="8" styleClass="detail-card">
+            <Label text="📊  Dashboard" style="-fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <Label wrapText="true" style="-fx-font-size: 15px; -fx-text-fill: #444444;"
+                   text="The Dashboard is the first screen the administrator sees, and it works by extracting and summarizing live data directly from the school's database in real time. It automatically calculates the total number of students currently enrolled across all classes, as well as the total number of teachers on staff. It sums up total revenue collected from student fees, giving an immediate financial snapshot without needing to open the Fee &amp; Balance section separately. It also breaks down the strength of boys and girls within each individual class, making it easy to see enrollment balance at a glance. All of this is presented as visual graphs and charts including a dedicated graph tracking attendance trends over time, so administrators can quickly spot patterns without digging through raw tables."/>
+        </VBox>
+
+        <!-- Student Records -->
+        <VBox spacing="8" styleClass="detail-card">
+            <Label text="🎓  Student Records" style="-fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <Label wrapText="true" style="-fx-font-size: 15px; -fx-text-fill: #444444;"
+                   text="The Student Records section is where the school's entire student body is organized. The administrator can create a new class for any grade level, from Nursery through the highest grade offered, with as many sections as needed and add students within it. Adding a student opens a detailed admission form covering the student's full name, parents' names and professions, date of birth, gender, religion, nationality, address, contact numbers, a photograph, and identification numbers including the student's B-Form and both parents' CNIC numbers. Once submitted, this information is compiled into a clean, aesthetic student profile viewable at any time. From here, the administrator can browse all classes, view every student enrolled in each one, and search for any student by name or roll number."/>
+        </VBox>
+
+        <!-- Teacher Records -->
+        <VBox spacing="8" styleClass="detail-card">
+            <Label text="👩‍🏫  Teacher Records" style="-fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <Label wrapText="true" style="-fx-font-size: 15px; -fx-text-fill: #444444;"
+                   text="Teacher Records keeps the school's teaching staff organized alongside student data. Each teacher's profile can hold their personal and contact information, the subjects or classes they are responsible for, and other administrative details giving the school a single, structured place to manage its staff records rather than relying on separate paper files or spreadsheets."/>
+        </VBox>
+
+        <!-- Attendance -->
+        <VBox spacing="8" styleClass="detail-card">
+            <Label text="📅  Attendance Management" style="-fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <Label wrapText="true" style="-fx-font-size: 15px; -fx-text-fill: #444444;"
+                   text="The Attendance Management section allows the administrator to mark daily attendance for every class in the school. A class and date are selected, and every student in that class can be individually marked present or absent with a single click, or the entire class can be marked present or absent all at once. Sundays are automatically treated as a holiday. Every student also has their own complete attendance history, viewable at any time, tracking their attendance throughout their entire time at the school."/>
+        </VBox>
+
+        <!-- Exams and Results -->
+        <VBox spacing="8" styleClass="detail-card">
+            <Label text="📝  Exams &amp; Results" style="-fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <Label wrapText="true" style="-fx-font-size: 15px; -fx-text-fill: #444444;"
+                   text="The Results &amp; Exams section lets the administration create a new examination for any class, defining subjects and total marks for each. The system automatically prepares a result sheet for every student in that class, and marks can be entered subject by subject, with totals, percentages, and grades calculated automatically. For any student, a strikingly professional result card can be generated, previewed, printed, or saved as a PDF, complete with the school's letterhead, the student's own photograph, a full subject-by-subject breakdown, overall grade and result status, and designated spaces for the teacher's and principal's signatures."/>
+        </VBox>
+
+        <!-- Fee and Balance -->
+        <VBox spacing="8" styleClass="detail-card">
+            <Label text="💰  Dues &amp; Balance" style="-fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <Label wrapText="true" style="-fx-font-size: 15px; -fx-text-fill: #444444;"
+                   text="The Dues &amp; Balance section manages every aspect of student fee collection. The administrator can create a new fee entry for any student, and when payment is received, mark that fee as paid instantly generating a printable receipt reflecting the paid status, amount, and payment date. Every payment is stored permanently within that student's own individual record, so a complete fee history for any student can be reviewed at any time, alongside a clear, up-to-date picture of who still owes what."/>
+        </VBox>
+
+        <!-- Contact -->
+        <VBox spacing="8" styleClass="detail-card">
+            <Label text="✉  Contact Students" style="-fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <Label wrapText="true" style="-fx-font-size: 15px; -fx-text-fill: #444444;"
+                   text="The Contact section allows the administration to reach any individual student's parent or an entire class at once directly through WhatsApp, using contact numbers already stored in student profiles. This makes attendance follow-ups, fee reminders, exam updates, and general announcements fast, personal, and effortless."/>
+        </VBox>
+
+
+        <!-- Backup and Storage -->
+        <VBox spacing="8" styleClass="detail-card">
+            <Label text="📥  Backup &amp; Storage" style="-fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <Label wrapText="true" style="-fx-font-size: 15px; -fx-text-fill: #444444;"
+                   text="Backup &amp; Storage gives the administration full control over the school's own data. With a single click, the system generates a complete, organized backup arranged into a session folder by year, containing every class's student records, examination results, and fee records, each saved as a spreadsheet compatible file that opens directly in programs like Excel. This backup can be saved anywhere: a separate hard disk, a USB drive, or any storage location of the administration's choosing, allowing the school to keep its own independent copy of its records at any time, completely separate from the computer running the application."/>
+        </VBox>
+
+        <!-- Data ownership -->
+        <VBox spacing="8" styleClass="detail-card">
+            <Label text="🔒  Your Data, Your Custody" style="-fx-font-size: 17px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <Label wrapText="true" style="-fx-font-size: 15px; -fx-text-fill: #444444;"
+                   text="Every piece of information in this system lives in a single local database file on this computer. At any time, the administration can download and save a copy of this database file, keeping the school's entire student data securely in their own personal custody independent of any company, server, or internet connection."/>
+        </VBox>
+        <!-- Developer -->
+
+        <Label text="DEVELOPED BY" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #7B5B3E; -fx-padding: 10 0 0 0;"/>
+        <VBox spacing="10" styleClass="detail-card" alignment="CENTER">
+            <ImageView fitWidth="72" fitHeight="72" preserveRatio="true">
+                <Image url="@/images/gate_logo.png"/>
+            </ImageView>
+            <Label text="Gate Developers" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #7B5B3E; -fx-font-family: 'Georgia';"/>
+            <Label text="Your Gateway to Digital Innovation" style="-fx-font-size: 15px; -fx-text-fill: #555555;"/>
+            <Label text="📍 Islamabad, Pakistan" style="-fx-font-size: 15px; -fx-text-fill: #7B5B3E; -fx-font-weight: bold;"/>
+
+            <Label wrapText="true" textAlignment="CENTER" style="-fx-font-size: 15px; -fx-text-fill: #444444;"
+                   text="Gate Developers is a software company that turns ideas into real, working products. We build all kinds of desktop applications, custom chat systems, websites, AI agent integrations, and mobile apps for both iOS and Android designing feasible, purpose built solutions tailored to exactly what a client needs, not generic off-the-shelf software."/>
+
+            <Label wrapText="true" textAlignment="CENTER" style="-fx-font-size: 15px; -fx-text-fill: #444444; -fx-font-style: italic;"
+                   text="Have an idea? Follow us on the platforms below to get in touch — we'd love to help build it."/>
+
+            <HBox spacing="12" alignment="CENTER">
+                <padding><Insets top="8"/></padding>
+
+                <Button styleClass="social-btn, social-whatsapp" onAction="#onWhatsApp">
+                    <graphic>
+                        <ImageView fitWidth="42" fitHeight="42" preserveRatio="true">
+                            <Image url="@/images/whatsapp_icon.png"/>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button styleClass="social-btn, social-email" onAction="#onEmail">
+                    <graphic>
+                        <ImageView fitWidth="42" fitHeight="42" preserveRatio="true">
+                            <Image url="@/images/gmail_icon.png"/>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button text="f" styleClass="social-btn, social-facebook" onAction="#onFacebook"/>
+
+                <Button styleClass="social-btn, social-instagram" onAction="#onInstagram">
+                    <graphic>
+                        <ImageView fitWidth="42" fitHeight="42" preserveRatio="true">
+                            <Image url="@/images/instagram_icon.png"/>
+                        </ImageView>
+                    </graphic>
+                </Button>
+
+                <Button text="in" styleClass="social-btn, social-linkedin" onAction="#onLinkedIn"/>
+                <Button text="X" styleClass="social-btn, social-twitter" onAction="#onTwitter"/>
+
+                <Button styleClass="social-btn, social-github" onAction="#onGithub">
+                    <graphic>
+                        <ImageView fitWidth="42" fitHeight="42" preserveRatio="true">
+                            <Image url="@/images/github_icon.png"/>
+                        </ImageView>
+                    </graphic>
+                </Button>
+            </HBox>
+        </VBox>
+
+        <Label text="© 2026 Gate. All rights reserved." style="-fx-font-size: 11px; -fx-text-fill: #999999;"/>
+
+    </VBox>
+</ScrollPane>
