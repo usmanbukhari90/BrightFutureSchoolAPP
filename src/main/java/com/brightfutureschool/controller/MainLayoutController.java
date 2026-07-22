@@ -92,7 +92,7 @@ public class MainLayoutController {
 
     @FXML
     private void onPoweredByGate() {
-        openInfoDialog("/fxml/info/PoweredByGate.fxml", "Powered by Gate");
+        loadIntoContent("/fxml/info/PoweredByGate.fxml");
     }
 
     private void openInfoDialog(String fxmlPath, String title) {

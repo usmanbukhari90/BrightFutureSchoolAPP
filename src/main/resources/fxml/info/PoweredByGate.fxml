@@ -4,27 +4,49 @@
 <?import javafx.scene.image.*?>
 <?import javafx.geometry.*?>
 
-<VBox xmlns="http://javafx.com/javafx"
-      xmlns:fx="http://javafx.com/fxml"
-      fx:controller="com.brightfutureschool.controller.info.PoweredByGateController"
-      spacing="14" alignment="CENTER" prefWidth="380" prefHeight="340" style="-fx-background-color: #E8D9C3;">
-    <padding><Insets top="30" right="30" bottom="25" left="30"/></padding>
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.brightfutureschool.controller.info.PoweredByGateController"
+            fitToWidth="true" style="-fx-background-color: #F3E9DC;">
 
-    <ImageView fitWidth="70" fitHeight="70" preserveRatio="true">
-        <Image url="@/images/gate_logo.png"/>
-    </ImageView>
+    <VBox spacing="18" style="-fx-padding: 30;">
 
-    <Label text="Gate" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #7B5B3E; -fx-font-family: 'Georgia';"/>
-    <Label text="Custom Software Solutions" style="-fx-font-size: 12px; -fx-text-fill: #555555;"/>
+        <Label text="About This Application" style="-fx-font-family: 'Georgia'; -fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #7B5B3E;"/>
 
-    <Separator/>
+        <!-- Developer card -->
+        <VBox spacing="14" styleClass="card" alignment="CENTER" style="-fx-padding: 30;">
+            <ImageView fx:id="gateLogo" fitHeight="70" fitWidth="70"/>
+            <Label text="Gate" style="-fx-font-family: 'Georgia'; -fx-font-size: 26px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;"/>
+            <Label text="Your Gateway to Digital Innovation" style="-fx-font-size: 13px; -fx-opacity: 0.7;"/>
+        </VBox>
 
-    <Label text="This application was designed and developed by Gate."
-           wrapText="true" style="-fx-font-size: 12px; -fx-text-fill: #2C3E50;" textAlignment="CENTER"/>
+        <!-- About section -->
+        <VBox spacing="10" styleClass="card" style="-fx-padding: 22;">
+            <Label text="Who We Are" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #7B5B3E;"/>
+            <Label wrapText="true" style="-fx-font-size: 12.5px; -fx-line-spacing: 3px;"
+                   text="Gate is a custom software development company specializing in building tailored desktop, web, and mobile solutions for businesses, schools, and institutions. We focus on practical, reliable software designed around how our clients actually work — not generic templates."/>
+        </VBox>
 
-    <Label fx:id="whatsappLabel" text="For support, feature requests, or new projects, feel free to reach out."
-           wrapText="true" style="-fx-font-size: 12px; -fx-text-fill: #2C3E50;" textAlignment="CENTER"/>
+        <VBox spacing="10" styleClass="card" style="-fx-padding: 22;">
+            <Label text="This Application" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #7B5B3E;"/>
+            <Label wrapText="true" style="-fx-font-size: 12.5px; -fx-line-spacing: 3px;"
+                   text="Bright Future School App was designed and developed by Gate to manage student records, attendance, fee collection, results, and communication for Bright Future School. It was custom-built from the ground up to fit the school's specific workflow."/>
+        </VBox>
 
-    <Button text="💬 Message on WhatsApp" styleClass="button-primary" onAction="#onMessageOnWhatsApp" maxWidth="Infinity"/>
-    <Button text="Close" onAction="#onClose" maxWidth="Infinity"/>
-</VBox>
+        <VBox spacing="10" styleClass="card" style="-fx-padding: 22;">
+            <Label text="Copyright &amp; License" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #7B5B3E;"/>
+            <Label wrapText="true" style="-fx-font-size: 12.5px; -fx-line-spacing: 3px;"
+                   text="© 2026 Gate. All rights reserved. This software and its source code are the intellectual property of Gate and are licensed for use exclusively by Bright Future School. Unauthorized copying, redistribution, resale, or modification of this software outside the terms agreed with Gate is strictly prohibited."/>
+        </VBox>
+
+        <VBox spacing="10" styleClass="card" style="-fx-padding: 22;">
+            <Label text="Support &amp; Contact" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: #7B5B3E;"/>
+            <Label wrapText="true" style="-fx-font-size: 12.5px;"
+                   text="For support requests, feature additions, bug reports, or new projects, feel free to reach out."/>
+            <Button text="💬 Message on WhatsApp" styleClass="button-primary" onAction="#onMessageWhatsApp" maxWidth="Infinity"/>
+        </VBox>
+
+        <Label text="Version 1.0" style="-fx-font-size: 11px; -fx-opacity: 0.5; -fx-alignment: center;" maxWidth="Infinity"/>
+    </VBox>
+
+</ScrollPane>
