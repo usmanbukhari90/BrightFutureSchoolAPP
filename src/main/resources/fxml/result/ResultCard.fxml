@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.geometry.*?>
+
+<ScrollPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.brightfutureschool.controller.result.ResultCardController"
+            fitToWidth="true" prefWidth="650" prefHeight="780" style="-fx-background-color: #E8D9C3;">
+
+    <VBox spacing="10">
+        <padding><Insets top="15" right="20" bottom="20" left="20"/></padding>
+
+        <!-- Printable card -->
+        <StackPane fx:id="cardRoot" style="-fx-border-color: #7B5B3E; -fx-border-width: 1.5;">
+
+            <!-- Solid white base so table/text stay fully readable -->
+            <Region style="-fx-background-color: white;"/>
+
+            <!-- Watermark, centered, behind all content -->
+            <ImageView fx:id="watermarkView" fitWidth="380" fitHeight="380" opacity="0.13" preserveRatio="true"/>
+
+            <!-- Actual card content -->
+            <VBox spacing="14">
+                <padding><Insets top="25" right="35" bottom="30" left="35"/></padding>
+
+                <!-- Header -->
+                <HBox spacing="15" alignment="CENTER_LEFT">
+                    <ImageView fx:id="logoView" fitWidth="65" fitHeight="65" preserveRatio="true"/>
+                    <VBox spacing="2">
+                        <Label fx:id="schoolNameLabel" style="-fx-font-size: 20px; -fx-font-weight: bold; -fx-text-fill: #7B5B3E; -fx-font-family: 'Georgia';"/>
+                        <Label fx:id="addressLabel" style="-fx-font-size: 11px; -fx-text-fill: #555555;"/>
+                    </VBox>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <VBox spacing="1" alignment="CENTER_RIGHT">
+                        <Label text="Contact    " style="-fx-font-size: 10px; -fx-font-weight: bold; -fx-text-fill: #7B5B3E;"/>
+                        <Label fx:id="phone1Label" style="-fx-font-size: 9px; -fx-text-fill: #555555;"/>
+                        <Label fx:id="phone2Label" style="-fx-font-size: 9px; -fx-text-fill: #555555;"/>
+                    </VBox>
+                </HBox>
+                <Separator/>
+
+                <VBox alignment="CENTER" spacing="2">
+                    <Label fx:id="classHeadingLabel" style="-fx-font-size: 18px; -fx-font-weight: bold; -fx-text-fill: #7B5B3E;"/>
+                    <Label fx:id="examTitleLabel" style="-fx-font-size: 13px; -fx-text-fill: #2C3E50;"/>
+                </VBox>
+
+                <!-- Candidate info + photo -->
+                <HBox spacing="20" alignment="CENTER_LEFT">
+                    <padding><Insets left="10" right="10"/></padding>
+                    <VBox spacing="8" HBox.hgrow="ALWAYS">
+                        <HBox spacing="15">
+                            <Label text="Roll No" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;" minWidth="130"/>
+                            <Label fx:id="rollNoLabelValue" style="-fx-font-size: 13px; -fx-text-fill: #2C3E50;"/>
+                        </HBox>
+                        <HBox spacing="15">
+                            <Label text="Student Name" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;" minWidth="130"/>
+                            <Label fx:id="studentNameLabelValue" style="-fx-font-size: 13px; -fx-text-fill: #2C3E50;"/>
+                        </HBox>
+                        <HBox spacing="15">
+                            <Label text="Father's Name" style="-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #2C3E50;" minWidth="130"/>
+                            <Label fx:id="fatherNameLabelValue" style="-fx-font-size: 13px; -fx-text-fill: #2C3E50;"/>
+                        </HBox>
+                    </VBox>
+                    <ImageView fx:id="studentPhotoView" fitWidth="90" fitHeight="90" preserveRatio="true"
+                               style="-fx-border-color: #7B5B3E; -fx-border-width: 1;"/>
+                </HBox>
+
+                <Separator/>
+
+                <!-- Subjects table -->
+                <VBox style="-fx-border-color: #ddd; -fx-border-width: 1;">
+                    <GridPane fx:id="subjectsGrid" hgap="0" vgap="0" style="-fx-background-color: transparent;">
+                        <columnConstraints>
+                            <ColumnConstraints percentWidth="30"/>
+                            <ColumnConstraints percentWidth="17"/>
+                            <ColumnConstraints percentWidth="19"/>
+                            <ColumnConstraints percentWidth="19"/>
+                            <ColumnConstraints percentWidth="15"/>
+                        </columnConstraints>
+                    </GridPane>
+                </VBox>
+
+                <!-- Totals -->
+                <GridPane hgap="20" vgap="6">
+                    <columnConstraints>
+                        <ColumnConstraints percentWidth="25"/>
+                        <ColumnConstraints percentWidth="25"/>
+                        <ColumnConstraints percentWidth="25"/>
+                        <ColumnConstraints percentWidth="25"/>
+                    </columnConstraints>
+
+                    <VBox spacing="2" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                        <Label text="TOTAL" styleClass="detail-caption"/>
+                        <Label fx:id="totalValue" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    </VBox>
+                    <VBox spacing="2" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                        <Label text="PERCENTAGE" styleClass="detail-caption"/>
+                        <Label fx:id="percentageValue" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    </VBox>
+                    <VBox spacing="2" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                        <Label text="GRADE" styleClass="detail-caption"/>
+                        <Label fx:id="gradeValue" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    </VBox>
+                    <VBox spacing="2" GridPane.columnIndex="3" GridPane.rowIndex="0">
+                        <Label text="RESULT" styleClass="detail-caption"/>
+                        <Label fx:id="remarksValue" style="-fx-font-weight: bold; -fx-font-size: 14px;"/>
+                    </VBox>
+                </GridPane>
+
+                <Region VBox.vgrow="ALWAYS" minHeight="30"/>
+
+                <!-- Signatures -->
+                <HBox spacing="40">
+                    <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
+                        <Region prefHeight="40"/>
+                        <Separator/>
+                        <Label text="Teacher's Signature" style="-fx-font-size: 11px; -fx-text-fill: #555555;"/>
+                    </VBox>
+                    <VBox alignment="CENTER" HBox.hgrow="ALWAYS">
+                        <Region prefHeight="40"/>
+                        <Separator/>
+                        <Label text="Principal's Signature" style="-fx-font-size: 11px; -fx-text-fill: #555555;"/>
+                    </VBox>
+                </HBox>
+
+            </VBox>
+        </StackPane>
+
+        <HBox spacing="10" alignment="CENTER_RIGHT">
+            <Button text="Close" onAction="#onClose"/>
+            <Button text="💾 Save as PDF" onAction="#onSaveAsPdf"/>
+            <Button text="🖨 Print" styleClass="button-primary" onAction="#onPrint"/>
+        </HBox>
+    </VBox>
+</ScrollPane>
