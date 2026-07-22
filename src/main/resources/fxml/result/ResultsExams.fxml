@@ -29,7 +29,6 @@
             <FlowPane fx:id="examsFlow" hgap="15" vgap="15"/>
         </ScrollPane>
     </VBox>
-he
     <VBox fx:id="marksView" spacing="15" visible="false" managed="false" VBox.vgrow="ALWAYS">
         <HBox alignment="CENTER_LEFT" spacing="10">
             <Button text="&lt; Back to Exams" onAction="#onBackToExams"/>
