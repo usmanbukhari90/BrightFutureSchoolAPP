@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.brightfutureschool.controller.attendance.AttendanceController"
+      spacing="15">
+    <padding><Insets top="10" right="10" bottom="10" left="10"/></padding>
+
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Label text="Attendance" style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Label text="Class:" style="-fx-font-weight: bold;"/>
+        <ComboBox fx:id="classComboBox" prefWidth="200"/>
+        <Label text="Date:" style="-fx-font-weight: bold;"/>
+        <DatePicker fx:id="datePicker" prefWidth="160"/>
+    </HBox>
+
+    <Label fx:id="holidayBanner" styleClass="holiday-banner" visible="false" managed="false"/>
+
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <TextField fx:id="searchField" promptText="Search by name or roll no" onAction="#onSearch" prefWidth="250"/>
+        <Button text="Search" onAction="#onSearch"/>
+        <Region HBox.hgrow="ALWAYS"/>
+        <Button text="✓ Present Everybody" onAction="#onMarkAllPresent" style="-fx-background-color: #4CAF50; -fx-text-fill: white;"/>
+        <Button text="✗ Absent Everybody" onAction="#onMarkAllAbsent" style="-fx-background-color: #E74C3C; -fx-text-fill: white;"/>
+    </HBox>
+
+    <TableView fx:id="attendanceTable" VBox.vgrow="ALWAYS"/>
+
+</VBox>
