@@ -8,7 +8,19 @@ import java.sql.Statement;
 
 public class DatabaseManager {
 
-    private static final String DB_PATH = "brightfutureschool.db";
+    private static final String DB_PATH = getDatabasePath();
+
+    private static String getDatabasePath() {
+        String appDataDir = System.getenv("APPDATA");
+        if (appDataDir == null) {
+            appDataDir = System.getProperty("user.home");
+        }
+        java.io.File folder = new java.io.File(appDataDir, "BrightFutureSchoolApp");
+        if (!folder.exists()) {
+            folder.mkdirs();
+        }
+        return new java.io.File(folder, "brightfutureschool.db").getAbsolutePath();
+    }
     private static final String URL = "jdbc:sqlite:" + DB_PATH;
 
     public static Connection connect() throws SQLException {
