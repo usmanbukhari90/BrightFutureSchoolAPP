@@ -19,6 +19,7 @@ public class Main extends Application {
 
         primaryStage.setTitle("Bright Future School App");
         primaryStage.setScene(scene);
+        primaryStage.setMaximized(true);
         primaryStage.show();
 
         PauseTransition delay = new PauseTransition(Duration.seconds(5));
