@@ -62,19 +62,29 @@
 
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.5.1</version>
+                <artifactId>maven-jar-plugin</artifactId>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <mainClass>com.brightfutureschool.Launcher</mainClass>
+                            <addClasspath>true</addClasspath>
+                            <classpathPrefix>libs/</classpathPrefix>
+                        </manifest>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-dependency-plugin</artifactId>
+                <version>3.6.1</version>
                 <executions>
                     <execution>
+                        <id>copy-dependencies</id>
                         <phase>package</phase>
-                        <goals><goal>shade</goal></goals>
+                        <goals><goal>copy-dependencies</goal></goals>
                         <configuration>
-                            <finalName>BFS-app</finalName>
-                            <transformers>
-                                <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
-                                    <mainClass>com.brightfutureschool.Main</mainClass>
-                                </transformer>
-                            </transformers>
+                            <outputDirectory>${project.build.directory}/libs</outputDirectory>
                         </configuration>
                     </execution>
                 </executions>
@@ -90,13 +100,12 @@
                     <vendor>Gate</vendor>
                     <destination>target/dist</destination>
                     <input>target</input>
-                    <mainJar>BFS-app.jar</mainJar>
-                    <mainClass>com.brightfutureschool.Main</mainClass>
+                    <mainJar>BrightFutureSchoolAPP-1.0-SNAPSHOT.jar</mainJar>
+                    <mainClass>com.brightfutureschool.Launcher</mainClass>
                     <icon>app-icon.ico</icon>
                     <winMenu>true</winMenu>
                     <winShortcut>true</winShortcut>
                     <winDirChooser>true</winDirChooser>
-                    <winConsole>true</winConsole>
                     <type>EXE</type>
                 </configuration>
             </plugin>
