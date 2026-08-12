@@ -23,6 +23,7 @@ import java.net.URI;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
+import javafx.scene.control.ButtonBar;
 
 public class ContactController {
 
@@ -179,13 +180,40 @@ public class ContactController {
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION);
         confirm.setTitle("Send WhatsApp Messages");
         confirm.setHeaderText("This will open " + withContact.size() + " WhatsApp chat(s), one at a time.");
-        confirm.setContentText("You'll need to click Send inside WhatsApp for each one. Continue?");
+        confirm.setContentText("Each chat opens with the message ready in the draft box. After you click Send inside WhatsApp, come back and click \"Next Student\" here. Continue?");
         confirm.showAndWait().ifPresent(response -> {
             if (response == ButtonType.OK) {
-                for (Student s : withContact) {
-                    openWhatsAppChat(s.getContact(), message);
-                    try { Thread.sleep(1500); } catch (InterruptedException ignored) {}
-                }
+                sendSequentially(withContact, message, 0);
+            }
+        });
+    }
+
+    private void sendSequentially(List<Student> students, String message, int index) {
+        if (index >= students.size()) {
+            showAlert("Done — all " + students.size() + " chat(s) have been opened.");
+            return;
+        }
+
+        Student current = students.get(index);
+        openWhatsAppChat(current.getContact(), buildFormattedMessage(current, message));
+
+        Alert nextPrompt = new Alert(Alert.AlertType.INFORMATION);
+        nextPrompt.setTitle("WhatsApp Sender");
+        nextPrompt.setHeaderText("Chat opened for: " + current.getFullName() + " (Roll No: " + current.getRollNo() + ")");
+        nextPrompt.setContentText("Progress: " + (index + 1) + " of " + students.size()
+                + "\n\nClick \"Next Student\" once you've clicked Send inside WhatsApp for this one.");
+
+        ButtonType nextBtn = new ButtonType("Next Student");
+        ButtonType stopBtn = new ButtonType("Stop", ButtonBar.ButtonData.CANCEL_CLOSE);
+        nextPrompt.getButtonTypes().setAll(nextBtn, stopBtn);
+
+        // Keep this dialog floating above WhatsApp (or any other window) while the admin sends the message
+        Stage promptStage = (Stage) nextPrompt.getDialogPane().getScene().getWindow();
+        promptStage.setAlwaysOnTop(true);
+
+        nextPrompt.showAndWait().ifPresent(btn -> {
+            if (btn == nextBtn) {
+                sendSequentially(students, message, index + 1);
             }
         });
     }
@@ -196,27 +224,42 @@ public class ContactController {
             showAlert("Please type a message first.");
             return;
         }
-        openWhatsAppChat(student.getContact(), message);
+        openWhatsAppChat(student.getContact(), buildFormattedMessage(student, message));
     }
 
     private void openWhatsAppChat(String contact, String message) {
         String cleanNumber = contact.replaceAll("[^0-9]", "");
         String encodedMessage = URLEncoder.encode(message, StandardCharsets.UTF_8);
+        String desktopUrl = "whatsapp://send?phone=" + cleanNumber + "&text=" + encodedMessage;
 
         try {
-            // Try opening directly in WhatsApp Desktop app (skips browser landing page)
-            String desktopUrl = "whatsapp://send?phone=" + cleanNumber + "&text=" + encodedMessage;
-            Desktop.getDesktop().browse(new URI(desktopUrl));
-        } catch (Exception desktopFailed) {
+            // rundll32 hands the URL straight to Windows' protocol dispatcher --
+            // avoids cmd.exe parsing "&" as a command separator, which was truncating the message.
+            ProcessBuilder pb = new ProcessBuilder("rundll32", "url.dll,FileProtocolHandler", desktopUrl);
+            pb.start();
+        } catch (Exception e) {
             try {
-                // Fallback: opens in default browser via wa.me
                 String webUrl = "https://wa.me/" + cleanNumber + "?text=" + encodedMessage;
                 Desktop.getDesktop().browse(new URI(webUrl));
-            } catch (Exception e) {
-                showAlert("Could not open WhatsApp for this number. If WhatsApp shows this number is invalid, ask the student/parent for their correct WhatsApp number.");
-                e.printStackTrace();
+            } catch (Exception e2) {
+                showAlert("Could not open WhatsApp for this number. If the chat doesn't open correctly, ask the student/parent for their correct WhatsApp number.");
+                e2.printStackTrace();
             }
         }
+    }
+
+    private String buildFormattedMessage(Student student, String baseMessage) {
+        return "Dear Student/Parents,\n\n"
+                + "*Roll No:* " + student.getRollNo() + "\n"
+                + "*Student Name:* " + student.getFullName() + "\n"
+                + "*Father Name:* " + student.getFatherName() + "\n\n"
+                + baseMessage + "\n\n"
+                + "Kind Regards,\n"
+                + "*Admin*\n"
+                + "*Bright Future School*\n\n"
+                + "For any queries contact:\n"
+                + "0333-7253940\n"
+                + "0313-7254087";
     }
 
     private void showAlert(String message) {
