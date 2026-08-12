@@ -9,8 +9,10 @@ public class FeeRecord {
     private String status;      // PENDING or PAID
     private String paidDate;    // yyyy-MM-dd, null until paid
     private String createdDate; // yyyy-MM-dd
+    private double paidAmount;
 
     public FeeRecord() {}
+
 
     public long getId() { return id; }
     public void setId(long id) { this.id = id; }
@@ -29,6 +31,9 @@ public class FeeRecord {
 
     public String getStatus() { return status; }
     public void setStatus(String status) { this.status = status; }
+
+    public double getPaidAmount() { return paidAmount; }
+    public void setPaidAmount(double paidAmount) { this.paidAmount = paidAmount; }
 
     public String getPaidDate() { return paidDate; }
     public void setPaidDate(String paidDate) { this.paidDate = paidDate; }
