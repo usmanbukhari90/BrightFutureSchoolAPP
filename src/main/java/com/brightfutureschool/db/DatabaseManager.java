@@ -174,6 +174,15 @@ public class DatabaseManager {
         FOREIGN KEY (assigned_class_id) REFERENCES classes(id) ON DELETE SET NULL
     );
 """;
+        String createFeePayments = """
+    CREATE TABLE IF NOT EXISTS fee_payments (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        student_id INTEGER NOT NULL,
+        fee_record_id INTEGER NOT NULL,
+        amount REAL NOT NULL,
+        payment_date TEXT NOT NULL
+    );
+""";
         try (Connection conn = connect(); Statement stmt = conn.createStatement()) {
             stmt.execute(createClasses);
             stmt.execute(createStudents);
@@ -190,6 +199,7 @@ public class DatabaseManager {
             stmt.execute(createAttendance);
             stmt.execute(createAdminSenders);
             stmt.execute(createTeachers);
+            stmt.execute(createFeePayments);
             runMigrations(conn);
         } catch (SQLException e) {
             throw new RuntimeException("Failed to initialize database", e);
@@ -203,6 +213,8 @@ public class DatabaseManager {
         addColumnIfMissing(conn, "students", "gender", "TEXT");
         addColumnIfMissing(conn, "students", "religion", "TEXT");
         addColumnIfMissing(conn, "students", "nationality", "TEXT");
+        addColumnIfMissing(conn, "fee_receipts", "fee_type", "TEXT");
+        addColumnIfMissing(conn, "fee_records", "paid_amount", "REAL NOT NULL DEFAULT 0");
     }
 
     private static void addColumnIfMissing(Connection conn, String table, String column, String definition) throws SQLException {
