@@ -68,10 +68,10 @@ public class FeeController {
                 if (empty) { setGraphic(null); return; }
                 Row row = getTableView().getItems().get(getIndex());
                 btn.setDisable("PAID".equals(row.record.getStatus()));
+                btn.setText("PARTIAL".equals(row.record.getStatus()) ? "Pay Remaining" : "Mark Paid");
                 setGraphic(btn);
             }
         });
-
         colPrint.setCellFactory(col -> new TableCell<>() {
             private final Button btn = new Button("Print/Save");
             {
@@ -82,7 +82,7 @@ public class FeeController {
                 super.updateItem(item, empty);
                 if (empty) { setGraphic(null); return; }
                 Row row = getTableView().getItems().get(getIndex());
-                btn.setDisable(!"PAID".equals(row.record.getStatus()));
+                btn.setDisable(row.record.getPaidAmount() <= 0);
                 setGraphic(btn);
             }
         });
@@ -160,8 +160,56 @@ public class FeeController {
 
     private void markPaid(Row row) {
         try {
-            feeDao.markAsPaid(row.record.getId());
-            loadFeeTable();
+            double currentRemaining = row.record.getAmount() - row.record.getPaidAmount();
+            double arrearsBefore = feeDao.getOutstandingBalanceExcluding(row.student.getId(), row.record.getId());
+            double totalOwed = currentRemaining + arrearsBefore;
+
+            TextInputDialog dialog = new TextInputDialog(String.valueOf((int) totalOwed));
+            dialog.setTitle("Record Payment");
+            String arrearsNote = arrearsBefore > 0 ? " (includes Rs. " + (int) arrearsBefore + " in prior dues)" : "";
+            dialog.setHeaderText(row.student.getFullName() + " — Total Owed: Rs. " + (int) totalOwed + arrearsNote);
+            dialog.setContentText("Amount Paid (Rs.):");
+
+            dialog.showAndWait().ifPresent(input -> {
+                try {
+                    double amount = Double.parseDouble(input.trim());
+                    if (amount <= 0) {
+                        new Alert(Alert.AlertType.WARNING, "Enter a valid positive amount.").showAndWait();
+                        return;
+                    }
+                    if (amount > totalOwed) amount = totalOwed;
+
+                    double applied = feeDao.recordPaymentForRecordWithArrears(row.student.getId(), row.record.getId(), amount);
+                    loadFeeTable();
+
+                    FeeRecord updated = feeDao.getFeeRecordById(row.record.getId());
+                    openReceipt(row.student, updated, arrearsBefore, applied);
+                } catch (NumberFormatException e) {
+                    new Alert(Alert.AlertType.WARNING, "Please enter a valid number.").showAndWait();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            });
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void openReceipt(Student student, FeeRecord record, double arrearsBeforePayment, double paidThisTransaction) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/fee/Receipt.fxml"));
+            Parent root = loader.load();
+            ReceiptController controller = loader.getController();
+            controller.loadReceiptForPayment(student, record, arrearsBeforePayment, paidThisTransaction);
+
+            ScrollPane scrollPane = new ScrollPane(root);
+            scrollPane.setFitToWidth(true);
+
+            Stage stage = new Stage();
+            stage.setTitle("Fee Receipt - " + student.getFullName());
+            stage.setScene(new Scene(scrollPane, 650, 750));
+            stage.centerOnScreen();
+            stage.show();
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -241,12 +289,12 @@ public class FeeController {
     }
 
     private void onPrintReceipt(Row row) {
-        if (!"PAID".equals(row.record.getStatus())) return;
+        if (row.record.getPaidAmount() <= 0) return;
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/fee/Receipt.fxml"));
             Parent root = loader.load();
             ReceiptController controller = loader.getController();
-            controller.loadReceipt(row.student, row.record.getMonth());
+            controller.loadReceipt(row.student, row.record);
 
             ScrollPane scrollPane = new ScrollPane(root);
             scrollPane.setFitToWidth(true);
@@ -258,7 +306,6 @@ public class FeeController {
             stage.show();
         } catch (Exception e) {
             e.printStackTrace();
-
         }
     }
 
