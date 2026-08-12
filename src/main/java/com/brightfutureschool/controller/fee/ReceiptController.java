@@ -62,87 +62,88 @@ public class ReceiptController {
         if (logoUrl != null) logoImage.setImage(new Image(logoUrl.toExternalForm()));
     }
 
-    public void loadReceipt(Student student, String month) {
+    // Reprint case: uses current live DB state
+    public void loadReceipt(Student student, FeeRecord record) {
         try {
-            SchoolClass schoolClass = classDao.getAllClasses().stream()
-                    .filter(c -> c.getId() == student.getClassId())
-                    .findFirst().orElse(null);
-
-            List<FeeRecord> records = feeDao.getCurrentMonthForStudent(student.getId())
-                    .stream().filter(r -> month.equals(r.getMonth())).toList();
-
-            double refund = feeDao.getRefundsForStudentMonth(student.getId(), month);
-            String receiptNo = feeDao.getOrCreateReceiptNumber(student.getId(), month);
-
-            studentNameLabel.setText(student.getFullName());
-            fatherNameLabel.setText("S/O / D/O: " + student.getFatherName());
-            classLabel.setText("Class: " + (schoolClass != null ? schoolClass.toString() : "-"));
-            monthLabel.setText("Month: " + MonthUtil.format(month));
-            rollNoLabel.setText("Roll No: " + student.getRollNo());
-            receiptNoLabel.setText(receiptNo);
-
-            String latestPaidDate = records.stream()
-                    .filter(r -> r.getPaidDate() != null)
-                    .map(FeeRecord::getPaidDate)
-                    .max(String::compareTo)
-                    .orElse(java.time.LocalDate.now().toString());
-            datePaidLabel.setText(latestPaidDate);
-
-            buildFeeTable(records, refund);
-
+            double refund = feeDao.getRefundForRecord(student.getId(), record.getFeeType(), record.getMonth());
+            double outstandingBalance = feeDao.getOutstandingBalanceExcluding(student.getId(), record.getId());
+            renderReceipt(student, record, outstandingBalance, record.getPaidAmount(), refund);
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private void buildFeeTable(List<FeeRecord> records, double refund) {
+    // Fresh payment case: uses the exact figures captured at the moment of payment,
+    // so it's accurate even after arrears/current balances have already changed in the DB.
+    public void loadReceiptForPayment(Student student, FeeRecord record, double arrearsBeforePayment, double paidThisTransaction) {
+        try {
+            double refund = feeDao.getRefundForRecord(student.getId(), record.getFeeType(), record.getMonth());
+            renderReceipt(student, record, arrearsBeforePayment, paidThisTransaction, refund);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void renderReceipt(Student student, FeeRecord record, double arrearsAmount, double paidAmount, double refund) {
+        try {
+            SchoolClass schoolClass = classDao.getAllClasses().stream()
+                    .filter(c -> c.getId() == student.getClassId())
+                    .findFirst().orElse(null);
+
+            String receiptNo = feeDao.getOrCreateReceiptNumber(student.getId(), record.getFeeType(), record.getMonth());
+
+            studentNameLabel.setText(student.getFullName());
+            fatherNameLabel.setText("S/O / D/O: " + student.getFatherName());
+            classLabel.setText("Class: " + (schoolClass != null ? schoolClass.toString() : "-"));
+            monthLabel.setText("Month: " + MonthUtil.format(record.getMonth()));
+            rollNoLabel.setText("Roll No: " + student.getRollNo());
+            receiptNoLabel.setText(receiptNo);
+            datePaidLabel.setText(record.getPaidDate() != null ? record.getPaidDate() : java.time.LocalDate.now().toString());
+
+            buildFeeTable(record, refund, arrearsAmount, paidAmount);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void buildFeeTable(FeeRecord record, double refund, double arrearsAmount, double paidAmount) {
         feeTableGrid.getChildren().clear();
 
         addCell("Fee Description", 0, 0, true);
         addCell("Amount", 1, 0, true);
 
-        Map<String, Double> categoryTotals = new LinkedHashMap<>();
-        for (String type : DISPLAY_ORDER) categoryTotals.put(type, 0.0);
-        categoryTotals.put("Other", 0.0);
-
-        double total = 0, paid = 0;
-        StringBuilder otherDetail = new StringBuilder();
-
-        for (FeeRecord r : records) {
-            boolean known = false;
-            for (String type : DISPLAY_ORDER) {
-                if (type.equalsIgnoreCase(r.getFeeType()) || "Tuition Fee".equalsIgnoreCase(r.getFeeType()) && type.equals("School Fee")) {
-                    categoryTotals.merge(type, r.getAmount(), Double::sum);
-                    known = true;
-                    break;
-                }
-            }
-            if (!known) {
-                categoryTotals.merge("Other", r.getAmount(), Double::sum);
-                otherDetail.append(r.getFeeType()).append(" ");
-            }
-            total += r.getAmount();
-            if ("PAID".equals(r.getStatus())) paid += r.getAmount();
-        }
-
         int row = 1;
-        for (Map.Entry<String, Double> entry : categoryTotals.entrySet()) {
-            String label = entry.getKey().equals("Other") && !otherDetail.isEmpty()
-                    ? "Other (" + otherDetail.toString().trim() + ")"
-                    : entry.getKey();
-            if (entry.getKey().equals("Other") && otherDetail.isEmpty()) continue; // hide empty "Other" row
-            addCell(label, 0, row, false);
-            addCell("Rs. " + (int) (double) entry.getValue(), 1, row, false);
+        boolean matchedKnown = false;
+        for (String type : DISPLAY_ORDER) {
+            if (type.equals("Arrears / Balance")) continue;
+            double amount = type.equalsIgnoreCase(record.getFeeType()) ? record.getAmount() : 0;
+            if (amount > 0) matchedKnown = true;
+            addCell(type, 0, row, false);
+            addCell("Rs. " + (int) amount, 1, row, false);
+            row++;
+        }
+        if (!matchedKnown) {
+            addCell(record.getFeeType(), 0, row, false);
+            addCell("Rs. " + (int) record.getAmount(), 1, row, false);
             row++;
         }
 
-        addCell("Refund", 0, row, false);
-        addCell("Rs. " + (int) refund, 1, row, false);
+        addCell("Previous Outstanding Balance", 0, row, false);
+        addCell("Rs. " + (int) arrearsAmount, 1, row, false);
         row++;
 
+        if (refund > 0) {
+            addCell("Refund", 0, row, false);
+            addCell("Rs. " + (int) refund, 1, row, false);
+            row++;
+        }
+
+        double total = record.getAmount() + arrearsAmount;
+        double remaining = total - paidAmount - refund;
+
         totalLabel.setText("Rs. " + (int) total);
-        paidLabel.setText("Rs. " + (int) paid);
-        remainingLabel.setText("Rs. " + (int) (total - paid - refund));
+        paidLabel.setText("Rs. " + (int) paidAmount);
+        remainingLabel.setText("Rs. " + (int) remaining);
     }
 
     private void addCell(String text, int col, int row, boolean header) {

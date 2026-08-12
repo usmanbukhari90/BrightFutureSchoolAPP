@@ -231,6 +231,7 @@ public class FeeDao {
         f.setStatus(rs.getString("status"));
         f.setPaidDate(rs.getString("paid_date"));
         f.setCreatedDate(rs.getString("created_date"));
+        f.setPaidAmount(rs.getDouble("paid_amount"));
         return f;
     }
 
@@ -335,4 +336,157 @@ public class FeeDao {
             return receiptNo;
         }
     }
+
+    public String getOrCreateReceiptNumber(long studentId, String feeType, String month) throws SQLException {
+        String select = "SELECT receipt_no FROM fee_receipts WHERE student_id = ? AND fee_type = ? AND month = ?";
+        try (Connection conn = DatabaseManager.connect();
+             PreparedStatement ps = conn.prepareStatement(select)) {
+            ps.setLong(1, studentId);
+            ps.setString(2, feeType);
+            ps.setString(3, month);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getString("receipt_no");
+            }
+        }
+
+        try (Connection conn = DatabaseManager.connect()) {
+            String receiptNo;
+            try (Statement stmt = conn.createStatement();
+                 ResultSet rs = stmt.executeQuery("SELECT COUNT(*) AS cnt FROM fee_receipts")) {
+                rs.next();
+                int next = rs.getInt("cnt") + 1;
+                receiptNo = "BFS-" + String.format("%05d", next);
+            }
+            try (PreparedStatement ps = conn.prepareStatement(
+                    "INSERT INTO fee_receipts (receipt_no, student_id, fee_type, month, generated_date) VALUES (?, ?, ?, ?, ?)")) {
+                ps.setString(1, receiptNo);
+                ps.setLong(2, studentId);
+                ps.setString(3, feeType);
+                ps.setString(4, month);
+                ps.setString(5, java.time.LocalDate.now().toString());
+                ps.executeUpdate();
+            }
+            return receiptNo;
+        }
+    }
+
+    public double getRefundForRecord(long studentId, String feeType, String month) throws SQLException {
+        String sql = "SELECT SUM(amount) AS total FROM fee_refunds WHERE student_id = ? AND fee_type = ? AND month = ?";
+        try (Connection conn = DatabaseManager.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setLong(1, studentId);
+            ps.setString(2, feeType);
+            ps.setString(3, month);
+            try (ResultSet rs = ps.executeQuery()) {
+                if (rs.next()) return rs.getDouble("total");
+            }
+        }
+        return 0;
+    }
+
+    public void recordPayment(long feeRecordId, double amountPaid) throws SQLException {
+        FeeRecord record = getFeeRecordById(feeRecordId);
+        if (record == null) return;
+
+        double newPaidAmount = record.getPaidAmount() + amountPaid;
+        if (newPaidAmount > record.getAmount()) newPaidAmount = record.getAmount();
+        String status = newPaidAmount >= record.getAmount() ? "PAID" : "PARTIAL";
+
+        String sql = "UPDATE fee_records SET paid_amount = ?, status = ?, paid_date = ? WHERE id = ?";
+        try (Connection conn = DatabaseManager.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setDouble(1, newPaidAmount);
+            ps.setString(2, status);
+            ps.setString(3, java.time.LocalDate.now().toString());
+            ps.setLong(4, feeRecordId);
+            ps.executeUpdate();
+        }
+    }
+
+    // Oldest-first list of a student's other unpaid/partial fees (their "arrears")
+    public List<FeeRecord> getOutstandingRecordsExcluding(long studentId, long excludeRecordId) throws SQLException {
+        String sql = "SELECT * FROM fee_records WHERE student_id = ? AND id != ? AND status != 'PAID' ORDER BY month ASC, created_date ASC";
+        List<FeeRecord> result = new ArrayList<>();
+        try (Connection conn = DatabaseManager.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setLong(1, studentId);
+            ps.setLong(2, excludeRecordId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) result.add(mapRow(rs));
+            }
+        }
+        return result;
+    }
+
+    // Applies a payment: settles oldest arrears first, then puts any leftover toward the current record.
+    // Returns the amount actually applied (capped at total owed, so it never overpays).
+    public double recordPaymentForRecordWithArrears(long studentId, long currentRecordId, double amountEntered) throws SQLException {
+        FeeRecord current = getFeeRecordById(currentRecordId);
+        if (current == null) return 0;
+
+        List<FeeRecord> arrears = getOutstandingRecordsExcluding(studentId, currentRecordId);
+
+        double totalOwed = current.getAmount() - current.getPaidAmount();
+        for (FeeRecord r : arrears) totalOwed += (r.getAmount() - r.getPaidAmount());
+
+        double remainingToApply = Math.min(amountEntered, totalOwed);
+        double amountApplied = remainingToApply;
+        String today = java.time.LocalDate.now().toString();
+
+        for (FeeRecord r : arrears) {
+            if (remainingToApply <= 0) break;
+            double owed = r.getAmount() - r.getPaidAmount();
+            if (owed <= 0) continue;
+            double apply = Math.min(owed, remainingToApply);
+            applyPayment(r, apply, today);
+            remainingToApply -= apply;
+        }
+
+        if (remainingToApply > 0) {
+            double owed = current.getAmount() - current.getPaidAmount();
+            double apply = Math.min(owed, remainingToApply);
+            applyPayment(current, apply, today);
+            remainingToApply -= apply;
+        }
+
+        return amountApplied;
+    }
+
+    private void applyPayment(FeeRecord record, double amount, String date) throws SQLException {
+        double newPaid = record.getPaidAmount() + amount;
+        String status = newPaid >= record.getAmount() ? "PAID" : "PARTIAL";
+        try (Connection conn = DatabaseManager.connect();
+             PreparedStatement ps = conn.prepareStatement(
+                     "UPDATE fee_records SET paid_amount = ?, status = ?, paid_date = ? WHERE id = ?")) {
+            ps.setDouble(1, newPaid);
+            ps.setString(2, status);
+            ps.setString(3, date);
+            ps.setLong(4, record.getId());
+            ps.executeUpdate();
+        }
+        try (Connection conn = DatabaseManager.connect();
+             PreparedStatement ps = conn.prepareStatement(
+                     "INSERT INTO fee_payments (student_id, fee_record_id, amount, payment_date) VALUES (?, ?, ?, ?)")) {
+            ps.setLong(1, record.getStudentId());
+            ps.setLong(2, record.getId());
+            ps.setDouble(3, amount);
+            ps.setString(4, date);
+            ps.executeUpdate();
+        }
+    }
+
+    public double getOutstandingBalanceExcluding(long studentId, long excludeRecordId) throws SQLException {
+        String sql = "SELECT amount, paid_amount FROM fee_records WHERE student_id = ? AND id != ? AND status != 'PAID'";
+        double total = 0;
+        try (Connection conn = DatabaseManager.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setLong(1, studentId);
+            ps.setLong(2, excludeRecordId);
+            try (ResultSet rs = ps.executeQuery()) {
+                while (rs.next()) total += rs.getDouble("amount") - rs.getDouble("paid_amount");
+            }
+        }
+        return total;
+    }
+
 }
