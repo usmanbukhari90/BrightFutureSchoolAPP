@@ -190,10 +190,6 @@ public class DatabaseManager {
             stmt.execute(createExams);
             stmt.execute(createExamSubjects);
             stmt.execute(createStudentMarks);
-            runMigrations(conn);
-            stmt.execute(createClasses);
-            stmt.execute(createStudents);
-            stmt.execute(createFeeRecords);
             stmt.execute(createFeeRefunds);
             stmt.execute(createFeeReceipts);
             stmt.execute(createAttendance);
