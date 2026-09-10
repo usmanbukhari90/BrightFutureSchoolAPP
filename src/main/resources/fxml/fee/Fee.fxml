@@ -40,6 +40,7 @@
                 <TableColumn fx:id="colStatus" text="Status" prefWidth="80"/>
                 <TableColumn fx:id="colMarkPaid" text="Mark Paid" prefWidth="95"/>
                 <TableColumn fx:id="colPrint" text="Print / Save" prefWidth="95"/>
+                <TableColumn fx:id="colUnpaidSlip" text="Unpaid Slip" prefWidth="95"/>
                 <TableColumn fx:id="colDetails" text="Details" prefWidth="85"/>
             </columns>
         </TableView>
