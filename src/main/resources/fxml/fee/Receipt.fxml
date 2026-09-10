@@ -47,6 +47,7 @@
 
         <VBox alignment="CENTER" spacing="4">
             <Label text="FEE RECEIPT" style="-fx-font-family: 'Georgia'; -fx-font-size: 22px; -fx-font-weight: bold; -fx-text-fill: #7B5B3E;"/>
+            <Label fx:id="unpaidBannerLabel" text="" style="-fx-font-size: 12px; -fx-font-weight: bold; -fx-text-fill: #E74C3C;" managed="false" visible="false"/>
             <Region prefWidth="80" prefHeight="2" style="-fx-background-color: #7B5B3E;"/>
         </VBox>
 
