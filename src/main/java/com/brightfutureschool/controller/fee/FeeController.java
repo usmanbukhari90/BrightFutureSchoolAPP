@@ -35,6 +35,7 @@ public class FeeController {
     @FXML private TableColumn<Row, String> colStatus;
     @FXML private TableColumn<Row, Void> colMarkPaid;
     @FXML private TableColumn<Row, Void> colPrint;
+    @FXML private TableColumn<Row, Void> colUnpaidSlip;
     @FXML private TableColumn<Row, Void> colDetails;
 
     private final StudentDao studentDao = new StudentDao();
@@ -83,6 +84,21 @@ public class FeeController {
                 if (empty) { setGraphic(null); return; }
                 Row row = getTableView().getItems().get(getIndex());
                 btn.setDisable(row.record.getPaidAmount() <= 0);
+                setGraphic(btn);
+            }
+        });
+
+        colUnpaidSlip.setCellFactory(col -> new TableCell<>() {
+            private final Button btn = new Button("Unpaid Slip");
+            {
+                btn.setOnAction(e -> onPrintUnpaidSlip(getTableView().getItems().get(getIndex())));
+            }
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty) { setGraphic(null); return; }
+                Row row = getTableView().getItems().get(getIndex());
+                btn.setDisable("PAID".equals(row.record.getStatus()));
                 setGraphic(btn);
             }
         });
@@ -301,6 +317,26 @@ public class FeeController {
 
             Stage stage = new Stage();
             stage.setTitle("Fee Receipt - " + row.student.getFullName());
+            stage.setScene(new Scene(scrollPane, 650, 750));
+            stage.centerOnScreen();
+            stage.show();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void onPrintUnpaidSlip(Row row) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/fee/Receipt.fxml"));
+            Parent root = loader.load();
+            ReceiptController controller = loader.getController();
+            controller.loadUnpaidSlip(row.student, row.record);
+
+            ScrollPane scrollPane = new ScrollPane(root);
+            scrollPane.setFitToWidth(true);
+
+            Stage stage = new Stage();
+            stage.setTitle("Fee Slip (Unpaid) - " + row.student.getFullName());
             stage.setScene(new Scene(scrollPane, 650, 750));
             stage.centerOnScreen();
             stage.show();
