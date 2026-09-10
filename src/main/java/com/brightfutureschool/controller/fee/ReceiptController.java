@@ -44,6 +44,7 @@ public class ReceiptController {
     @FXML private ImageView logoImage;
     @FXML private Label studentNameLabel, fatherNameLabel, classLabel, monthLabel, rollNoLabel;
     @FXML private Label receiptNoLabel, datePaidLabel;
+    @FXML private Label unpaidBannerLabel;
     @FXML private GridPane feeTableGrid;
     @FXML private Label totalLabel, paidLabel, remainingLabel;
     @FXML private HBox actionButtonsBox;
@@ -79,6 +80,23 @@ public class ReceiptController {
         try {
             double refund = feeDao.getRefundForRecord(student.getId(), record.getFeeType(), record.getMonth());
             renderReceipt(student, record, arrearsBeforePayment, paidThisTransaction, refund);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    // Unpaid/partial case: shows what's currently owed, for the parent to bring to the office.
+    public void loadUnpaidSlip(Student student, FeeRecord record) {
+        try {
+            double refund = feeDao.getRefundForRecord(student.getId(), record.getFeeType(), record.getMonth());
+            double outstandingBalance = feeDao.getOutstandingBalanceExcluding(student.getId(), record.getId());
+            renderReceipt(student, record, outstandingBalance, record.getPaidAmount(), refund);
+
+            receiptNoLabel.setText(receiptNoLabel.getText() + "  (UNPAID)");
+            datePaidLabel.setText("Issued: " + java.time.LocalDate.now());
+            unpaidBannerLabel.setText("*** DEMAND SLIP — NOT A PAYMENT RECEIPT ***");
+            unpaidBannerLabel.setVisible(true);
+            unpaidBannerLabel.setManaged(true);
         } catch (Exception e) {
             e.printStackTrace();
         }
