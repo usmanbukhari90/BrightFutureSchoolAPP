@@ -54,6 +54,11 @@ public class AttendanceController {
         if (datePicker.getValue() == null) {
             datePicker.setValue(LocalDate.now());
         }
+
+        // The dropdown auto-selected its first class before the listeners existed,
+        // so load that class now; otherwise the screen starts empty.
+        currentClass = classComboBox.getValue();
+        refreshTable();
     }
 
     private void loadClassesIntoDropdown() {
@@ -100,6 +105,7 @@ public class AttendanceController {
 
     private void refreshTable() {
         if (currentClass == null || datePicker.getValue() == null) return;
+        buildColumnsIfNeeded(); // column headers also show on Sundays instead of "No columns in table"
         if (datePicker.getValue().getDayOfWeek() == DayOfWeek.SUNDAY) {
             attendanceTable.setItems(FXCollections.observableArrayList());
             return;
