@@ -55,6 +55,18 @@ public class ClassDao {
         }
     }
 
+    // Renames a class in place. id and roll_base are untouched, so all linked data stays attached.
+    public void updateClass(long classId, String className, String section) throws SQLException {
+        String sql = "UPDATE classes SET class_name = ?, section = ? WHERE id = ?";
+        try (Connection conn = DatabaseManager.connect();
+             PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, className);
+            ps.setString(2, section);
+            ps.setLong(3, classId);
+            ps.executeUpdate();
+        }
+    }
+
     private int getNextRollBase() throws SQLException {
         String sql = "SELECT MAX(roll_base) AS maxBase FROM classes";
         try (Connection conn = DatabaseManager.connect();
