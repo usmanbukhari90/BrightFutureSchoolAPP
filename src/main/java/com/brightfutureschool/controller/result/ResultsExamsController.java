@@ -62,6 +62,12 @@ public class ResultsExamsController {
                 showExamsView();
             }
         });
+
+        // Load the exams of the class the dropdown already selected
+        currentClass = classComboBox.getValue();
+        if (currentClass != null) {
+            loadExams();
+        }
     }
 
     private void loadClassesIntoDropdown() {
