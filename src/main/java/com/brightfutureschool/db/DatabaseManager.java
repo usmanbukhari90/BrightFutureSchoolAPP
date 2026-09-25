@@ -31,6 +31,33 @@ public class DatabaseManager {
         return conn;
     }
 
+    // Keeps one dated safety copy of the database per day (last 10 days) in an "auto-backups" folder.
+    // Must run BEFORE initSchema(). A failed copy must never stop the app from starting.
+    public static void backupDatabaseOnStartup() {
+        try {
+            java.io.File db = new java.io.File(DB_PATH);
+            if (!db.exists() || db.length() == 0) return;
+
+            java.io.File dir = new java.io.File(db.getParentFile(), "auto-backups");
+            dir.mkdirs();
+
+            java.io.File copy = new java.io.File(dir, "brightfutureschool-" + java.time.LocalDate.now() + ".db");
+            if (!copy.exists()) {
+                java.nio.file.Files.copy(db.toPath(), copy.toPath());
+            }
+
+            java.io.File[] all = dir.listFiles((d, n) -> n.startsWith("brightfutureschool-") && n.endsWith(".db"));
+            if (all != null && all.length > 10) {
+                java.util.Arrays.sort(all, java.util.Comparator.comparing(java.io.File::getName));
+                for (int i = 0; i < all.length - 10; i++) {
+                    all[i].delete();
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void initSchema() {
         String createClasses = """
             CREATE TABLE IF NOT EXISTS classes (
