@@ -13,6 +13,7 @@ public class Main extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception {
+        com.brightfutureschool.db.DatabaseManager.backupDatabaseOnStartup();
         com.brightfutureschool.db.DatabaseManager.initSchema();
         Parent splashRoot = FXMLLoader.load(getClass().getResource("/fxml/Splash.fxml"));
         Scene scene = new Scene(splashRoot, 800, 600);

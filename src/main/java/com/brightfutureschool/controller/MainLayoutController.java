@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -16,6 +17,21 @@ public class MainLayoutController {
     @FXML private ImageView sidebarLogo;
     @FXML private StackPane contentArea;
     @FXML private VBox sidebar;
+
+    @FXML private Button navDashboard, navStudents, navTeachers, navAttendance, navFee,
+            navResults, navContact, navSettings, navAbout;
+
+    // Highlights the sidebar button of the page currently shown (null = none highlighted)
+    private void setActiveNav(Button active) {
+        Button[] all = {navDashboard, navStudents, navTeachers, navAttendance, navFee,
+                navResults, navContact, navSettings, navAbout};
+        for (Button b : all) {
+            b.getStyleClass().remove("nav-button-active");
+        }
+        if (active != null) {
+            active.getStyleClass().add("nav-button-active");
+        }
+    }
 
     @FXML
     private void toggleSidebar() {
@@ -52,9 +68,9 @@ public class MainLayoutController {
             setContent("Failed to load " + errorContext + ": " + e.getMessage());
         }
     }
-
     @FXML
     private void showDashboard() {
+        setActiveNav(navDashboard);
         loadIntoContent("/fxml/Dashboard.fxml");
     }
 
@@ -71,14 +87,14 @@ public class MainLayoutController {
 
         }
     }
-    @FXML private void showStudents()    { setContent("/fxml/student/StudentRecords.fxml", "Student Records"); }
-    @FXML private void showTeachers() { loadIntoContent("/fxml/teacher/Teachers.fxml"); }
-    @FXML private void showAttendance()  { setContent("/fxml/attendance/Attendance.fxml", "Attendance"); }
-    @FXML private void showFee() { loadIntoContent("/fxml/fee/Fee.fxml"); }
-    @FXML private void showResults()     { setContent("/fxml/result/ResultsExams.fxml", "Results & Exams"); }
-    @FXML private void showContact() { loadIntoContent("/fxml/contact/Contact.fxml"); }
-    @FXML private void showSettings()    { setContent("/fxml/BackupSettings.fxml", "Backup Settings"); }
-    @FXML private void showAbout()       { setContent("/fxml/info/AboutUs.fxml", "About Us"); }
+    @FXML private void showStudents()    { setActiveNav(navStudents); setContent("/fxml/student/StudentRecords.fxml", "Student Records"); }
+    @FXML private void showTeachers()    { setActiveNav(navTeachers); loadIntoContent("/fxml/teacher/Teachers.fxml"); }
+    @FXML private void showAttendance()  { setActiveNav(navAttendance); setContent("/fxml/attendance/Attendance.fxml", "Attendance"); }
+    @FXML private void showFee()         { setActiveNav(navFee); loadIntoContent("/fxml/fee/Fee.fxml"); }
+    @FXML private void showResults()     { setActiveNav(navResults); setContent("/fxml/result/ResultsExams.fxml", "Results & Exams"); }
+    @FXML private void showContact()     { setActiveNav(navContact); loadIntoContent("/fxml/contact/Contact.fxml"); }
+    @FXML private void showSettings()    { setActiveNav(navSettings); setContent("/fxml/BackupSettings.fxml", "Backup Settings"); }
+    @FXML private void showAbout()       { setActiveNav(navAbout); setContent("/fxml/info/AboutUs.fxml", "About Us"); }
 
     @FXML
     private void onPrivacyPolicy() {
