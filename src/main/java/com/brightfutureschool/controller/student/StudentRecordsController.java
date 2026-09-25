@@ -38,7 +38,9 @@ public class StudentRecordsController {
     @FXML private TableColumn<Student, Void> editColumn;
     @FXML private TableColumn<Student, Void> deleteColumn;
 
+    @FXML private ToggleButton renameModeToggle;
     private boolean deleteMode = false;
+    private boolean renameMode = false;
 
     private final ClassDao classDao = new ClassDao();
     private final StudentDao studentDao = new StudentDao();
@@ -101,6 +103,11 @@ public class StudentRecordsController {
     @FXML
     private void onLandingAvailableClasses() {
         deleteMode = false;
+        renameMode = false;
+        renameModeToggle.setSelected(false);
+        renameModeToggle.setText("✏ Edit Class Name");
+        renameModeToggle.setVisible(true);
+        renameModeToggle.setManaged(true);
         classesHintLabel.setText("Click a class to open it.");
         loadClasses();
         showClassesView();
@@ -109,9 +116,23 @@ public class StudentRecordsController {
     @FXML
     private void onLandingDeleteClass() {
         deleteMode = true;
+        renameMode = false;
+        renameModeToggle.setSelected(false);
+        renameModeToggle.setVisible(false);
+        renameModeToggle.setManaged(false);
         classesHintLabel.setText("Click a class to delete it. This will also delete all students in that class.");
         loadClasses();
         showClassesView();
+    }
+
+    @FXML
+    private void onToggleRenameMode() {
+        renameMode = renameModeToggle.isSelected();
+        renameModeToggle.setText(renameMode ? "✔ Done" : "✏ Edit Class Name");
+        classesHintLabel.setText(renameMode
+                ? "Click a class to change its name or section. All students and records stay exactly as they are."
+                : "Click a class to open it.");
+        loadClasses();
     }
 
     @FXML
@@ -155,10 +176,12 @@ public class StudentRecordsController {
         card.getStyleClass().add("class-card");
         card.setPrefWidth(170);
         card.setPrefHeight(150);
-
         if (deleteMode) {
             card.getStyleClass().add("class-card-delete");
             card.setOnMouseClicked(e -> confirmAndDeleteClass(c));
+        } else if (renameMode) {
+            card.getStyleClass().add("class-card-rename");
+            card.setOnMouseClicked(e -> openRenameClassDialog(c));
         } else {
             card.setOnMouseClicked(e -> openClass(c));
         }
@@ -191,6 +214,25 @@ public class StudentRecordsController {
             }
         });
     }
+    private void openRenameClassDialog(SchoolClass c) {
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/student/RenameClassDialog.fxml"));
+            Parent root = loader.load();
+            RenameClassDialogController controller = loader.getController();
+            controller.initData(c, this::loadClasses);
+
+            Stage dialog = new Stage();
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.setTitle("Edit Class Name");
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/css/theme.css").toExternalForm());
+            dialog.setScene(scene);
+            dialog.showAndWait();
+        } catch (Exception e) {
+            showError("Could not open Edit Class Name dialog", e);
+        }
+    }
+
     private void openClass(SchoolClass c) {
         currentClass = c;
         studentsHeaderLabel.setText(c.getClassName() + " - " + c.getSection());

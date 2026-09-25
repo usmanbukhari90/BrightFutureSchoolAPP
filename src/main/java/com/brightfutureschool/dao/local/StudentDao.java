@@ -37,21 +37,38 @@ public class StudentDao {
         return result;
     }
 
-    // Roll no is now scoped to the class's own 100-slot block (e.g. class roll_base=1000 -> 1000-1099)
+    // Roll no is scoped to the class's own 100-slot block (e.g. class roll_base=1000 -> 1000-1099).
+    // Next roll no = (highest roll no used in the block) + 1, so deleting students from the middle
+    // can never cause a duplicate. Deleted numbers are only reused once the block's top is reached.
     public String generateNextRollNo(long classId, int rollBase) throws SQLException {
-        String sql = "SELECT COUNT(*) AS cnt FROM students WHERE class_id = ?";
+        int blockEnd = rollBase + 99;
+        String sql = "SELECT roll_no FROM students WHERE CAST(roll_no AS INTEGER) BETWEEN ? AND ?";
+        java.util.Set<Integer> used = new java.util.HashSet<>();
+        int max = rollBase - 1;
         try (Connection conn = DatabaseManager.connect();
              PreparedStatement ps = conn.prepareStatement(sql)) {
-            ps.setLong(1, classId);
+            ps.setInt(1, rollBase);
+            ps.setInt(2, blockEnd);
             try (ResultSet rs = ps.executeQuery()) {
-                rs.next();
-                int countInClass = rs.getInt("cnt");
-                if (countInClass >= 100) {
-                    throw new IllegalStateException("This class has reached its 100-student limit.");
+                while (rs.next()) {
+                    try {
+                        int n = Integer.parseInt(rs.getString("roll_no").trim());
+                        used.add(n);
+                        if (n > max) max = n;
+                    } catch (NumberFormatException ignored) {
+                        // non-numeric roll no cannot collide with a numeric one
+                    }
                 }
-                return String.valueOf(rollBase + countInClass);
             }
         }
+        if (max < blockEnd) {
+            return String.valueOf(max + 1);
+        }
+        // Top of the block reached: fall back to the lowest free number in the block
+        for (int n = rollBase; n <= blockEnd; n++) {
+            if (!used.contains(n)) return String.valueOf(n);
+        }
+        throw new IllegalStateException("This class has reached its 100-student limit.");
     }
     public Student addStudent(Student s) throws SQLException {
         String sql = """
