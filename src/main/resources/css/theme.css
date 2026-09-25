@@ -95,6 +95,15 @@
     -fx-background-color: #A9825C;
 }
 
+.nav-button-active,
+.nav-button-active:hover {
+    -fx-background-color: #E8D9C3;
+    -fx-text-fill: #4A3520;
+    -fx-border-color: #D4A24C;
+    -fx-border-width: 0 0 0 5;
+    -fx-border-radius: 5;
+}
+
 .hamburger-btn {
     -fx-background-color: transparent;
     -fx-text-fill: white;
@@ -330,6 +339,11 @@
 
 .class-card-delete {
     -fx-border-color: #E74C3C;
+}
+
+.class-card-rename {
+    -fx-border-color: #D4A24C;
+    -fx-border-width: 2.5;
 }
 /* Attendance present/absent toggle buttons */
 .attendance-toggle {
