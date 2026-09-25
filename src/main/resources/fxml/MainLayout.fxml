@@ -27,15 +27,15 @@
 
             <Region prefHeight="15"/>
 
-            <Button text="🏠  Dashboard" styleClass="nav-button" maxWidth="Infinity" onAction="#showDashboard"/>
-            <Button text="🎓  Student Records" styleClass="nav-button" maxWidth="Infinity" onAction="#showStudents"/>
-            <Button text="👩‍🏫 Teacher Records" styleClass="nav-button" maxWidth="Infinity" onAction="#showTeachers"/>
-            <Button text="📅  Attendance" styleClass="nav-button" maxWidth="Infinity" onAction="#showAttendance"/>
-            <Button text="💰  Dues &amp; Balance" styleClass="nav-button" maxWidth="Infinity" onAction="#showFee"/>
-            <Button text="📊  Exams &amp; Results" styleClass="nav-button" maxWidth="Infinity" onAction="#showResults"/>
-            <Button text="✉  Contact Students" styleClass="nav-button" maxWidth="Infinity" onAction="#showContact"/>
-            <Button text="⚙  Backup Settings" styleClass="nav-button" maxWidth="Infinity" onAction="#showSettings"/>
-            <Button text="ℹ  About" styleClass="nav-button" maxWidth="Infinity" onAction="#showAbout"/>
+            <Button fx:id="navDashboard" text="🏠  Dashboard" styleClass="nav-button" maxWidth="Infinity" onAction="#showDashboard"/>
+            <Button fx:id="navStudents" text="🎓  Student Records" styleClass="nav-button" maxWidth="Infinity" onAction="#showStudents"/>
+            <Button fx:id="navTeachers" text="👩‍🏫 Teacher Records" styleClass="nav-button" maxWidth="Infinity" onAction="#showTeachers"/>
+            <Button fx:id="navAttendance" text="📅  Attendance" styleClass="nav-button" maxWidth="Infinity" onAction="#showAttendance"/>
+            <Button fx:id="navFee" text="💰  Dues &amp; Balance" styleClass="nav-button" maxWidth="Infinity" onAction="#showFee"/>
+            <Button fx:id="navResults" text="📊  Exams &amp; Results" styleClass="nav-button" maxWidth="Infinity" onAction="#showResults"/>
+            <Button fx:id="navContact" text="✉  Contact Students" styleClass="nav-button" maxWidth="Infinity" onAction="#showContact"/>
+            <Button fx:id="navSettings" text="⚙  Backup Settings" styleClass="nav-button" maxWidth="Infinity" onAction="#showSettings"/>
+            <Button fx:id="navAbout" text="ℹ  About" styleClass="nav-button" maxWidth="Infinity" onAction="#showAbout"/>
         </VBox>
     </left>
     <center>
