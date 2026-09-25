@@ -38,16 +38,21 @@ public class MarksDao {
     }
 
     public void updateMark(long examSubjectId, long studentId, Double marksObtained) throws SQLException {
-        String sql = "UPDATE student_marks SET marks_obtained = ? WHERE exam_subject_id = ? AND student_id = ?";
+        String sql = """
+            INSERT INTO student_marks (exam_subject_id, student_id, marks_obtained)
+            VALUES (?, ?, ?)
+            ON CONFLICT (exam_subject_id, student_id)
+            DO UPDATE SET marks_obtained = excluded.marks_obtained
+        """;
         try (Connection conn = DatabaseManager.connect();
              PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setLong(1, examSubjectId);
+            ps.setLong(2, studentId);
             if (marksObtained == null) {
-                ps.setNull(1, Types.REAL);
+                ps.setNull(3, Types.REAL);
             } else {
-                ps.setDouble(1, marksObtained);
+                ps.setDouble(3, marksObtained);
             }
-            ps.setLong(2, examSubjectId);
-            ps.setLong(3, studentId);
             ps.executeUpdate();
         }
     }
