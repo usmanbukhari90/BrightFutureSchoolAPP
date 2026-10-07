@@ -119,7 +119,7 @@
                 </executions>
                 <configuration>
                     <name>BFS</name>
-                    <appVersion>1.0.0</appVersion>
+                    <appVersion>1.1.0</appVersion>
                     <vendor>Bright Future School</vendor>
                     <copyright>Bright Future School</copyright>
                     <description>Bright Future School Management App</description>
