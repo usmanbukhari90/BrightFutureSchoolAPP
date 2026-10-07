@@ -13,8 +13,10 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import java.io.File;
 
 import java.util.List;
 
@@ -100,6 +102,31 @@ public class StudentRecordsController {
         onCreateClass(); // opens the modal dialog; on success we jump to the class list
     }
 
+    @FXML
+    private void onLandingAddClassFromFile() {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Select a Student Records CSV file");
+        chooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("CSV Files", "*.csv"));
+        File file = chooser.showOpenDialog(landingView.getScene().getWindow());
+        if (file == null) return;
+
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/student/ImportClassDialog.fxml"));
+            Parent root = loader.load();
+            ImportClassDialogController controller = loader.getController();
+            controller.initData(file, this::onLandingAvailableClasses);
+
+            Stage dialog = new Stage();
+            dialog.initModality(Modality.APPLICATION_MODAL);
+            dialog.setTitle("Add Class from File");
+            Scene scene = new Scene(root);
+            scene.getStylesheets().add(getClass().getResource("/css/theme.css").toExternalForm());
+            dialog.setScene(scene);
+            dialog.showAndWait();
+        } catch (Exception e) {
+            showError("Could not open Add Class from File dialog", e);
+        }
+    }
     @FXML
     private void onLandingAvailableClasses() {
         deleteMode = false;
