@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.brightfutureschool.controller.student.ImportClassDialogController"
+      spacing="12" styleClass="root">
+    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+
+    <Label text="Add Class from File" style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+    <Label fx:id="fileLabel" style="-fx-font-size: 12px; -fx-text-fill: #7B5B3E;" wrapText="true"/>
+
+    <Label text="Class Name (e.g. Nursery, KG, Class 1, Class 8)"/>
+    <TextField fx:id="classNameField"/>
+
+    <Label text="Section (e.g. A, B, C)"/>
+    <TextField fx:id="sectionField"/>
+
+    <Label fx:id="summaryLabel" style="-fx-font-size: 12px;" wrapText="true"/>
+    <Label fx:id="skippedLabel" style="-fx-font-size: 11px; -fx-text-fill: #C77B1E;" wrapText="true"/>
+
+    <Label text="This will be created as a brand-new class. Roll numbers in the file are ignored — every student gets a new roll number here, the same as adding them by hand."
+           style="-fx-font-size: 11px; -fx-text-fill: #7B5B3E;" wrapText="true"/>
+    <Label fx:id="statusLabel" style="-fx-text-fill: #E74C3C;" wrapText="true"/>
+
+    <HBox spacing="10" alignment="CENTER_RIGHT">
+        <Button text="Cancel" onAction="#onCancel"/>
+        <Button fx:id="importButton" text="Import" styleClass="button-primary" onAction="#onImport"/>
+    </HBox>
+</VBox>
