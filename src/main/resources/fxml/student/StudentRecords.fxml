@@ -19,6 +19,9 @@
             <Button text="🗑 Delete Class" styleClass="button-primary"
                     style="-fx-font-size: 15px; -fx-padding: 20 35 20 35; -fx-background-color: #E74C3C;"
                     onAction="#onLandingDeleteClass"/>
+            <Button text="📂 Add Class from File" styleClass="button-primary"
+                    style="-fx-font-size: 15px; -fx-padding: 20 35 20 35;"
+                    onAction="#onLandingAddClassFromFile"/>
         </HBox>
     </VBox>
 
